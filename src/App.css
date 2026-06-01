@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@layer base {
+    html {
+        @apply scroll-smooth;
+    }
+}
+
+@theme {
+    --color-general-background: #F5F3F0;
+    --color-dark: #1C1C1C;
+    --color-button-primary: #C6A962;
+    --color-button-hover: #B89A4F;
+    --color-light: #E8E4DF;
+    --color-borders: #A89F91;
+    --color-alert: #fb2c36;
+    --color-skeleton: #F3F0EB;
+    --color-skeleton-border: #d4d4d8;
+    --color-skeleton-bg: #e4e4e7;
+}
