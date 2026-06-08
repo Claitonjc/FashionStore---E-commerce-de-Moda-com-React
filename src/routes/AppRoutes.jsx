@@ -6,6 +6,7 @@ import { Login } from "../pages/Login/Login";
 import { Register } from "../pages/Register/Register";
 import { UsersProvider } from "../context/UsersContext/UsersProvider";
 import { Address } from "../pages/Address/Address";
+import { Payment } from "../pages/Payment/Payment";
 
 export const AppRoutes = () => {
   return (
@@ -16,6 +17,7 @@ export const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/address" element={<Address />} />
+      <Route path="/payment" element={<Payment />} />
     </Routes>
   );
 };
