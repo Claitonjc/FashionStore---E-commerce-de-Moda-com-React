@@ -1,17 +1,104 @@
-# React + Vite
+# 👗 FashionStore
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma aplicação de e-commerce desenvolvida para simular uma experiência completa de compra online no segmento de moda. O projeto foi construído utilizando React e Tailwind CSS, com foco em componentes reutilizáveis, gerenciamento de estado e uma interface moderna e responsiva.
 
-Currently, two official plugins are available:
+## 🚀 Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 🛍️ Listagem de produtos
+- 🔍 Visualização de detalhes dos produtos
+- 🛒 Carrinho de compras
+- ➕ Adicionar e remover produtos do carrinho
+- 🔢 Controle de quantidade dos itens
+- 💳 Resumo do pedido com cálculo automático
+- 👤 Cadastro e autenticação de usuários
+- 📍 Gerenciamento de endereços
+- 📦 Fluxo de checkout
+- 📱 Layout responsivo
 
-## React Compiler
+## 🛠️ Tecnologias Utilizadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- JavaScript (ES6+)
+- React Router DOM
+- Context API
+- Tailwind CSS
+- Vite
+- Local Storage
 
-## Expanding the ESLint configuration
+## 📂 Estrutura do Projeto
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# FashionStore---E-commerce-de-Moda-com-React
+```bash
+src/
+├── components/
+├── contexts/
+├── hooks/
+├── pages/
+├── routes/
+├── services/
+├── utils/
+└── assets/
+```
+
+## ⚙️ Instalação
+
+Clone o repositório:
+
+```bash
+git clone https://github.com/seu-usuario/fashionstore.git
+```
+
+Acesse a pasta do projeto:
+
+```bash
+cd fashionstore
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Inicie o servidor de desenvolvimento:
+
+```bash
+npm run dev
+```
+
+## 📸 Demonstração
+
+<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/4e641dea-42ef-46b5-abfb-293e51654035" />
+
+<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/1597e3a7-e520-4841-be43-a01315db5caf" />
+
+<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/747de8b2-d009-473b-9a84-1353818a1569" />
+
+<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/51e3c6ce-463c-473f-8da0-36cadfc7c716" />
+
+<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/322a2703-cd4b-46f4-b493-4e5fc78b2cb8" />
+
+
+## 🎯 Objetivos do Projeto
+
+Este projeto foi desenvolvido com o objetivo de praticar e consolidar conhecimentos em:
+
+- Desenvolvimento Front-End com React
+- Componentização
+- Gerenciamento de estado global
+- Manipulação de formulários
+- Consumo de APIs
+- Boas práticas de organização de projetos
+- Responsividade e experiência do usuário
+
+## 🔮 Melhorias Futuras
+
+- Integração com API de CEP
+- Painel administrativo
+
+## 👨‍💻 Autor
+
+Desenvolvido por **Claiton**.
+
+---
+
+⭐ Se este projeto foi útil para você, considere deixar uma estrela no repositório.
