@@ -1,6 +1,6 @@
 export const Footer = () => {
   return (
-    <footer className="bg-dark text-light flex h-36 flex-col items-center justify-center gap-7">
+    <footer className="bg-dark text-light flex flex-col items-center justify-center gap-7 px-4 py-8 text-center">
       <div>
         <p className="text-[20px]">
           Elegância que transcende tendências, luxo em cada detalhe. Vista
@@ -8,9 +8,9 @@ export const Footer = () => {
         </p>
       </div>
       <div className="flex">
-        <p className="text-[12px]">
+        <address className="text-[12px] not-italic">
           Rua das Acácias, 847, Jardim Primavera, Ararangua - SC, CEP: 88900-123
-        </p>
+        </address>
       </div>
     </footer>
   );

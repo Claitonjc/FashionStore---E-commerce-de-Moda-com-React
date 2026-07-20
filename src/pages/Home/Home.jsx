@@ -24,8 +24,8 @@ export const Home = () => {
   return (
     <div className="flex min-h-screen flex-col font-[inter]">
       <Header />
+      <Banner />
       <main className="bg-general-background flex flex-1 flex-col items-center">
-        <Banner />
         <nav
           id="produtos"
           className="border-borders/70 bg-general-background/80 sticky top-0 z-50 flex w-full items-center justify-between border-b p-1 backdrop-blur-sm"

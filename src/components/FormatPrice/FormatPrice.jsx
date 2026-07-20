@@ -10,6 +10,12 @@ export const FormatPrice = ({ preco, count = 1, variant = "default" }) => {
       decimal: "text-lg align-top mr-5",
     },
 
+    medium: {
+      symbol: "text-[12px] mr-1 font-semibold",
+      inteiro: "text-[12px] font-bold tracking-tight",
+      decimal: "text-[12px] mr-5 font-bold",
+    },
+
     small: {
       symbol: "text-[12px] font-bold ml-1",
       inteiro: "text-[12px] font-bold",

@@ -11,6 +11,7 @@ import { AddressList } from "../../components/AddressList/AddressList";
 import { AddressModal } from "../../components/AddressModal/AddresModal";
 import { useAddressForm } from "../../hooks/useAddressForm";
 import { useState } from "react";
+import { useCheckout } from "../../hooks/useCheckout";
 
 export const Address = () => {
   const [active, setActive] = useState(false);
@@ -22,9 +23,10 @@ export const Address = () => {
     setAddresses,
     removeAddress,
     editAddress,
-    selectedAddress,
-    setSelectedAddress,
   } = useAddressForm();
+
+  const { selectedAddressId, setSelectedAddressId, shippingOption } =
+    useCheckout();
 
   const openModal = () => {
     setActive(true);
@@ -49,7 +51,8 @@ export const Address = () => {
   const { carts } = useCart();
 
   const userCart = carts.find((cart) => cart.userId === userLogged?.id);
-  const { total, portion, discount } = calcTotalPrice(userCart);
+  const { total, portion, discount, subTotal, freight } =
+    calcTotalPrice(userCart);
 
   return (
     <div className="flex min-h-screen flex-col font-[inter]">
@@ -58,7 +61,7 @@ export const Address = () => {
         <div className="flex w-full max-w-7xl flex-col justify-center lg:flex-row">
           <section className="w-full lg:w-[70%]">
             {userLogged && (
-              <div className="bg-light border-borders/40 m-7 flex min-h-[100px] flex-col items-center items-start gap-2 rounded-xl border p-5">
+              <div className="bg-light border-borders/40 m-7 flex min-h-25 flex-col items-start gap-2 rounded-xl border p-5">
                 <h1 className="text-dark mb-5 w-full p-2 text-center text-[20px] font-semibold">
                   Selecione ou cadastre um novo endereço
                 </h1>
@@ -80,9 +83,9 @@ export const Address = () => {
                         handleEdit={handleEdit}
                         openModal={openModal}
                         value={address.id}
-                        checked={selectedAddress === address.id}
+                        checked={selectedAddressId === address.id}
                         onChange={(event) =>
-                          setSelectedAddress(event.target.value)
+                          setSelectedAddressId(event.target.value)
                         }
                       />
                     ))}
@@ -102,12 +105,25 @@ export const Address = () => {
           {userLogged && (
             <section className="flex w-full flex-col lg:w-[30%]">
               <OrderSummary
-                total={total}
-                discount={discount}
-                portion={portion}
+                subTotal={subTotal}
+                total={
+                  shippingOption === "Entrega Expressa"
+                    ? total
+                    : total - freight
+                }
+                discount={
+                  shippingOption === "Entrega Expressa"
+                    ? discount
+                    : discount - freight
+                }
+                portion={
+                  shippingOption === "Entrega Expressa"
+                    ? portion
+                    : subTotal / 10
+                }
               />
               <div className="border-borders/30 sticky top-70 m-7 flex flex-col gap-3 rounded-xl border bg-white p-5 text-center">
-                {!selectedAddress ? (
+                {!selectedAddressId ? (
                   <div className="relative flex flex-col">
                     <p className="text-dark absolute -top-4.5 left-[25%] text-[12px]">
                       Selecione um endereço
@@ -120,7 +136,7 @@ export const Address = () => {
                   </div>
                 ) : (
                   <NavigationLink
-                    rout="/payment"
+                    rout="/shipping"
                     text="Continuar"
                     variant="linkButton"
                   />

@@ -7,17 +7,25 @@ import { Register } from "../pages/Register/Register";
 import { UsersProvider } from "../context/UsersContext/UsersProvider";
 import { Address } from "../pages/Address/Address";
 import { Payment } from "../pages/Payment/Payment";
+import { Shipping } from "../pages/Shipping/Shipping";
+import { Checkout } from "../pages/Checkout/Checkout";
+import { PurchaseComplete } from "../pages/PurchaseComplete/PurchaseComplete";
+import { Profile } from "../pages/Profile/Profile";
 
 export const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/details/:id" element={<ProductDetails />} />
       <Route path="/carrinho" element={<Carrinho />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/address" element={<Address />} />
       <Route path="/payment" element={<Payment />} />
+      <Route path="/shipping" element={<Shipping />} />
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/complete" element={<PurchaseComplete />} />
     </Routes>
   );
 };

@@ -6,7 +6,8 @@ export const Banner = () => {
       <img
         src={heroSection}
         alt="Fashion Store"
-        className="h-[60vh] w-screen object-cover"
+        className="h-[60vh] w-full object-cover"
+        fetchPriority="high"
       />
 
       <div className="absolute inset-0 bg-black/40" />

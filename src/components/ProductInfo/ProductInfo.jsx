@@ -28,7 +28,7 @@ export const ProductInfo = ({ produto }) => {
           <button
             type="button"
             onClick={() => userCart(produto)}
-            className="item bg-button-primary hover:bg-button-hover flex items-center gap-2 self-center rounded-xl px-6 py-3 font-medium tracking-wide shadow-sm transition-all duration-300 active:scale-95"
+            className="item bg-button-primary hover:bg-button-hover flex cursor-pointer items-center gap-2 self-center rounded-xl px-6 py-3 font-medium tracking-wide shadow-sm transition-all duration-300 active:scale-95"
           >
             <BsCart3 /> Adicionar ao carrinho
           </button>

@@ -9,9 +9,10 @@ export const CartProvider = ({ children }) => {
   const [produtoMensagem, setProdutoMensagem] = useState(null);
   const { userLogged } = useUsers();
 
+  const currentCart = carts.find((cart) => cart.userId === userLogged?.id);
+
   const userCart = (item) => {
-    const existingCart = carts.find((cart) => cart.userId === userLogged.id);
-    if (!existingCart) {
+    if (!currentCart) {
       const firstCartUser = {
         userId: userLogged.id,
         items: [
@@ -25,7 +26,7 @@ export const CartProvider = ({ children }) => {
       return;
     }
 
-    const oldItems = existingCart.items;
+    const oldItems = currentCart.items;
 
     const isExist = oldItems.some((produto) => produto.id === item.id);
 
@@ -45,7 +46,7 @@ export const CartProvider = ({ children }) => {
       },
     ];
 
-    const newCartUser = { ...existingCart, items: newItems };
+    const newCartUser = { ...currentCart, items: newItems };
 
     setCarts((prevCarts) =>
       prevCarts.map((cart) =>
@@ -64,9 +65,27 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+  const clearCart = () => {
+    const userCart = carts.find((cart) => cart.userId === userLogged.id);
+    const itemsCart = (userCart.items = []);
+
+    const newCart = { ...userCart, items: itemsCart };
+    setCarts((prevCarts) =>
+      prevCarts.map((cart) => (cart.userId === userLogged.id ? newCart : cart)),
+    );
+  };
+
   return (
     <CartContext.Provider
-      value={{ carts, produtoMensagem, userCart, setCarts, removeFromCart }}
+      value={{
+        carts,
+        produtoMensagem,
+        userCart,
+        setCarts,
+        removeFromCart,
+        clearCart,
+        currentCart,
+      }}
     >
       {children}
     </CartContext.Provider>

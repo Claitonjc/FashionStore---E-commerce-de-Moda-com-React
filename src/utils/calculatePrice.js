@@ -1,15 +1,17 @@
 export const calcTotalPrice = (cart) => {
-  const total = cart?.items?.reduce(
+  const subTotal = cart?.items?.reduce(
     (soma, produto) => soma + produto.price * produto.quantity,
     0,
   );
 
-  const portion = total / 10;
-  const discount = total - (total * 10) / 100;
+  const freight = (subTotal * 15) / 100;
+  const total = subTotal + freight;
 
   return {
+    subTotal,
+    portion: total / 10,
+    discount: total - (total * 10) / 100,
+    freight,
     total,
-    portion,
-    discount,
   };
 };

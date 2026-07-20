@@ -5,13 +5,19 @@ import { CartProvider } from "./context/cartContext/CartProvider";
 import { UsersProvider } from "./context/UsersContext/UsersProvider";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
+import { CheckoutProvider } from "./context/checkoutContext/CheckoutProvider";
+import { AddressProvider } from "./context/addressContext/AddressProvider";
 
 function App() {
   return (
     <BrowserRouter>
       <UsersProvider>
         <CartProvider>
-          <AppRoutes />
+          <AddressProvider>
+            <CheckoutProvider>
+              <AppRoutes />
+            </CheckoutProvider>
+          </AddressProvider>
         </CartProvider>
       </UsersProvider>
     </BrowserRouter>
