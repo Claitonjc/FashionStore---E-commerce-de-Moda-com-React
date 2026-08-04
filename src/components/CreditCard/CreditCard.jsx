@@ -1,79 +1,105 @@
-import { InputTypeFieldset } from "../../components/InputTypeFieldset/InputTypeFieldset";
-import { calcTotalPrice } from "../../utils/calculatePrice";
-import { useCart } from "../../hooks/useCart";
-import { useUsers } from "../../hooks/useUsers";
 import { useState } from "react";
-import { useCheckout } from "../../hooks/useCheckout";
 import { FaChevronDown } from "react-icons/fa6";
+import { CiTrash } from "react-icons/ci";
+
+//Hooks
+import { useCart } from "../../hooks/useCart";
+import { useCheckout } from "../../hooks/useCheckout";
+
+// Components
+import { InputTypeFieldset } from "../../components/InputTypeFieldset/InputTypeFieldset";
+
+// Utils
 import { formatPrice } from "../../utils/formatPrice";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { calcTotalPrice } from "../../utils/calculatePrice";
 
 export const CreditCard = () => {
-  const { carts } = useCart();
-  const { userLogged } = useUsers();
+  // ==========================================================================
+  // 1. STATES & HOOKS
+  // ==========================================================================
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { currentCart } = useCart();
   const {
     shippingOption,
     listUserCard,
     cvv,
     setCvv,
-    selectedCard,
-    setSelectedCard,
-    selectedMethod,
-    setSelectedMethod,
+    installments,
+    setInstallments,
+    paymentMethod,
+    setPaymentMethod,
+    removeCard,
   } = useCheckout();
-  const [isOpen, setIsOpen] = useState(false);
 
-  const userCart = carts.find((cart) => cart.userId === userLogged.id);
-  const { total, freight } = calcTotalPrice(userCart);
+  // ==========================================================================
+  // 2. DERIVED DATA & CALCULATIONS
+  // ==========================================================================
+  const { totalwithFreight, subTotal } = calcTotalPrice(currentCart);
 
   const finalTotal =
-    shippingOption === "Entrega Expressa" ? total : total - freight;
+    shippingOption === "Entrega Expressa" ? totalwithFreight : subTotal;
 
-  const paymentMethod = Array.from({ length: 10 }, (_, index) => {
-    const installments = index + 1;
-    const installmentValue = finalTotal / installments;
+  const paymentInstallments = Array.from({ length: 10 }, (_, index) => {
+    const installment = index + 1;
+    const installmentValue = finalTotal / installment;
 
     return {
-      value: installments,
-      label: `${installments}x sem juros - ${formatPrice(installmentValue).symbol}${formatPrice(installmentValue).inteiro}${formatPrice(installmentValue).separator}${formatPrice(installmentValue).decimal}`,
+      value: installment,
+      label: `${installment}x sem juros - ${formatPrice(installmentValue).symbol}${formatPrice(installmentValue).integer}${formatPrice(installmentValue).separator}${formatPrice(installmentValue).decimal}`,
     };
   });
 
+  // =========================================================================
+  // 3. ACTIONS
+  // =========================================================================
   const handleChangeMethod = (event) => {
-    setSelectedMethod(event.target.value);
+    setInstallments(event.target.value);
   };
 
+  // =========================================================================
+  // 4. RENDER
+  // =========================================================================
   return (
     <li className="flex flex-col gap-2">
-      <label>
-        <div className="mt-5 flex flex-col gap-2">
-          <ul className="flex flex-col gap-5">
-            {listUserCard &&
-              listUserCard.map((card) => (
-                <li key={card.id}>
-                  <label className="flex gap-2">
-                    <input
-                      type="radio"
-                      name="payment"
-                      value={card.id}
-                      checked={selectedCard?.id === card.id}
-                      onChange={() => setSelectedCard(card)}
-                    />
-                    <div>
-                      <span>{card.alias}</span>
-                      <p>{card.number}</p>
-                    </div>
-                  </label>
-                </li>
-              ))}
-          </ul>
-        </div>
-      </label>
+      <div className="mt-5 flex flex-col gap-2">
+        <ul className="flex flex-col gap-5">
+          {listUserCard &&
+            listUserCard.map((card) => (
+              <li key={card.id} className="flex justify-between px-2">
+                <label className="flex gap-2">
+                  <input
+                    type="radio"
+                    name="payment"
+                    value={card.id}
+                    checked={paymentMethod?.id === card.id}
+                    onChange={() => setPaymentMethod(card)}
+                  />
+                  <div>
+                    <span>{card.alias ? card.alias : card.name}</span>
+                    <p>{card.number}</p>
+                  </div>
+                </label>
+                <div className="flex items-center gap-3">
+                  <button
+                    aria-label="Excluir Cartão"
+                    type="button"
+                    className="hover:text-alert cursor-pointer text-[20px] text-black transition-colors"
+                    onClick={() => removeCard(card.id)}
+                  >
+                    <CiTrash />
+                  </button>
+                </div>
+              </li>
+            ))}
+        </ul>
+      </div>
+
       <div className="flex items-center gap-2">
         <InputTypeFieldset
           label="CVV*"
           type="text"
-          name="CVV*"
+          name="cvv"
           value={cvv}
           onChange={(event) => setCvv(event.target.value)}
         />
@@ -84,22 +110,22 @@ export const CreditCard = () => {
           <legend className="ml-4 text-[12px]">Forma de pagamento*</legend>
           <select
             name="portions"
-            value={selectedMethod}
+            value={installments}
             onChange={handleChangeMethod}
-            onClick={() => (isOpen ? setIsOpen(false) : setIsOpen(true))}
+            onFocus={() => setIsOpen(true)}
+            onBlur={() => setIsOpen(false)}
             className="text-dark mb-2 w-full cursor-pointer appearance-none rounded-xl px-4 py-0.5 pr-10 text-sm font-medium focus:border-0 focus:outline-0"
           >
-            {paymentMethod.map((method, index) => (
-              <option key={index} value={method.value}>
+            {paymentInstallments.map((method) => (
+              <option key={method.value} value={method.value}>
                 {method.label}
               </option>
             ))}
           </select>
-          <button>
-            <FaChevronDown
-              className={`text-dark pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-xs transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-            />
-          </button>
+
+          <FaChevronDown
+            className={`text-dark ${isOpen ? "rotate-180" : ""} pointer-events-none absolute top-[45%] right-3 -translate-y-1/2 text-xs transition-transform duration-300`}
+          />
         </fieldset>
       </div>
     </li>

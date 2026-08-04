@@ -1,6 +1,10 @@
+// Assets (Imagens, ícones locais, SVGs)
 import heroSection from "../../assets/heroSection.png";
 
-export const Banner = () => {
+export const HeroSection = () => {
+  // ==========================================================================
+  // 1. RENDER
+  // ==========================================================================
   return (
     <section className="relative min-h-[60vh]">
       <img

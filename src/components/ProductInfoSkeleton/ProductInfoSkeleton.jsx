@@ -1,4 +1,7 @@
 export const ProductInfoSkeleton = () => {
+  // ==========================================================================
+  // 1. RENDER
+  // ==========================================================================
   return (
     <div className="border-skeleton-border/40 bg-skeleton mt-5 mr-5 flex min-h-150 w-[70%] animate-pulse rounded-2xl border p-5 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
       <div className="ml-5 flex h-full w-full items-center justify-center">

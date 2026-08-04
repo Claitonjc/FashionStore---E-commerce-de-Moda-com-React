@@ -1,11 +1,11 @@
-import { getProdutoPorId } from "../service/productService";
+import { getProductById } from "../service/productService";
 import { useFetch } from "./useFetch";
 
 export const useProduct = (id) => {
-  const { data, loading, error } = useFetch(() => getProdutoPorId(id), [id]);
+  const { data, loading, error } = useFetch(() => getProductById(id), [id]);
 
   return {
-    produto: data,
+    product: data,
     loading,
     error,
   };

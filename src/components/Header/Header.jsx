@@ -1,29 +1,34 @@
 import { BsCart3 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
+// Hooks
 import { useCart } from "../../hooks/useCart";
 import { useUsers } from "../../hooks/useUsers";
 
+// Assets (Imagens, ícones locais, SVGs)
 import logoFundoPreto from "../../assets/logoFundoPreto.png";
 
 export const Header = () => {
-  // Hooks
-  const { userLogged, setUserLogged } = useUsers();
+  // ==========================================================================
+  // 1. STATES & HOOKS
+  // ==========================================================================
+  const { userLogged, logout } = useUsers();
   const { currentCart } = useCart();
 
+  // ==========================================================================
+  // 2. DERIVED DATA & CALCULATIONS
+  // ==========================================================================
   const cartQuantity = currentCart?.items.length ?? 0;
 
-  // Handlers
-  const handleLogout = () => {
-    setUserLogged(null);
-  };
-
+  // ==========================================================================
+  // 3. RENDER
+  // ==========================================================================
   return (
     <header className="bg-dark relative flex h-28 w-full items-center justify-center">
       <Link to="/">
         <img
           src={logoFundoPreto}
-          alt="Go to the fashion store homepage"
+          alt="Página principal da Fashion Store"
           className="w-2xs"
         />
       </Link>
@@ -31,24 +36,20 @@ export const Header = () => {
         {userLogged ? (
           <nav className="text-light mr-10 flex gap-8 text-[12px]">
             <Link to="/profile">{userLogged.name}</Link>
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="cursor-pointer"
-            >
-              Logout
+            <button type="button" onClick={logout} className="cursor-pointer">
+              Sair
             </button>
           </nav>
         ) : (
           <nav className="text-light mr-10 flex gap-8 text-[12px]">
-            <Link to="/login">Login</Link>
-            <Link to="/register">Sign Up</Link>
+            <Link to="/login">Entrar</Link>
+            <Link to="/register">Cadastrar</Link>
           </nav>
         )}
         <Link
-          aria-label="Abrir carrinho"
+          aria-label="Open Cart"
           className="text-dark hover:text-button-hover relative mt-1.5 mr-8 flex cursor-pointer items-center"
-          to="/carrinho"
+          to="/cart"
         >
           <BsCart3 className="text-light text-3xl" />
           {cartQuantity > 0 && (

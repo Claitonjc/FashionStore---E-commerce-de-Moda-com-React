@@ -1,94 +1,148 @@
-import { useState } from "react";
-import { CheckoutContext } from "./checkoutContext";
-import { FormatPrice } from "../../components/FormatPrice/FormatPrice";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+// Context
+import { CheckoutContext } from "./checkoutContext";
+
+// Hooks
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useCart } from "../../hooks/useCart";
 
 export const CheckoutProvider = ({ children }) => {
-  const [selectedAddressId, setSelectedAddressId] = useLocalStorage(
-    "addressSelected",
-    "",
+  // =================================================================
+  // 1.STATES & HOOKS
+  // =================================================================
+  const [cvv, setCvv] = useState("");
+  const [modalActive, setModalActive] = useState(false);
+  const [stateAuthenticCard, setStateAuthenticCard] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+
+  const { clearCart } = useCart();
+  const [orderNumber, setOrderNumber] = useLocalStorage("orderNumber", null);
+  const [paymentMethod, setPaymentMethod] = useLocalStorage(
+    "paymentMethod",
+    "pix",
   );
-  const [paymentMethod, setPaymentMethod] = useState(null);
   const [shippingOption, setShippingOption] = useLocalStorage(
     "shipping",
     "Grátis",
   );
   const [listUserCard, setListUserCard] = useLocalStorage("CardList", []);
-  const [cvv, setCvv] = useState("");
-  const [modalActive, setModalActive] = useState(false);
-  const [selectedCard, setSelectedCard] = useLocalStorage("cardSelected", "");
-  const [stateAuthenticCard, setStateAuthenticCard] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [selectedMethod, setSelectedMethod] = useLocalStorage("portions", "1");
-  const { clearCart } = useCart();
+  const [installments, setInstallments] = useLocalStorage("installments", "1");
 
-  const navigate = useNavigate();
+  // ==================================================================
+  // 2.ACTIONS (Business Rules and Checkout Logic)
+  // ==================================================================
+  const addUserCard = useCallback(
+    (card) => {
+      setListUserCard((prevCards) => [...prevCards, card]);
+    },
+    [setListUserCard],
+  );
 
-  const calcShippingValue = (value, freight) => {
-    if (value === "Grátis") {
-      return "Grátis";
-    } else if (value === "Entrega Expressa") {
-      return <FormatPrice preco={freight} variant="small" />;
-    }
-  };
+  const removeCard = useCallback(
+    (id) => {
+      setListUserCard((prevCards) =>
+        prevCards.filter((card) => card.id !== id),
+      );
+    },
+    [setListUserCard],
+  );
 
-  const addUserCard = (card) => {
-    setListUserCard((prevCards) => [...prevCards, card]);
-  };
+  const authenticCard = useCallback(
+    (route) => {
+      // Case 1: Payment via PIX
+      if (paymentMethod === "pix") {
+        setErrorMessage("");
+        setInstallments("1");
+        navigate(`/${route}`);
+        return;
+      }
 
-  const authenticCard = (route) => {
-    if (selectedCard === "pix") {
+      // Case 2: Payment via Credit Card
+      const isCard =
+        typeof paymentMethod === "object" && paymentMethod !== null;
+
+      if (isCard && paymentMethod.code !== cvv) {
+        setErrorMessage("Erro no código CVV");
+        return;
+      }
+
+      // Success
       setErrorMessage("");
-      setSelectedMethod("1");
       navigate(`/${route}`);
-      return;
-    }
+      setCvv("");
+    },
+    [cvv, navigate, paymentMethod, setInstallments],
+  );
 
-    if (selectedCard.code !== cvv) {
-      setErrorMessage("Erro no código CVV");
-      return;
-    }
+  const handleFinishPayment = useCallback(() => {
+    const newOrderNumber = Math.floor(100000 + Math.random() * 900000);
+    setOrderNumber(newOrderNumber);
+  }, [setOrderNumber]);
 
-    setErrorMessage("");
-    navigate(`/${route}`);
-    setCvv("");
-  };
-
-  const endPayment = () => {
+  /**
+   * Finalizes the order, clears the cart, and redirects to the success screen.
+   */
+  const endPayment = useCallback(() => {
     clearCart();
+    handleFinishPayment();
     navigate("/complete");
-  };
+  }, [clearCart, navigate, handleFinishPayment]);
+
+  // ===========================================================================
+  // 3.MEMOIZATION & RETURN
+  // ===========================================================================
+  const contextValue = useMemo(
+    () => ({
+      paymentMethod,
+      setPaymentMethod,
+      shippingOption,
+      setShippingOption,
+      addUserCard,
+      listUserCard,
+      cvv,
+      setCvv,
+      modalActive,
+      setModalActive,
+      authenticCard,
+      stateAuthenticCard,
+      setStateAuthenticCard,
+      errorMessage,
+      setErrorMessage,
+      installments,
+      setInstallments,
+      endPayment,
+      removeCard,
+      orderNumber,
+    }),
+    [
+      paymentMethod,
+      setPaymentMethod,
+      shippingOption,
+      setShippingOption,
+      addUserCard,
+      listUserCard,
+      cvv,
+      setCvv,
+      modalActive,
+      setModalActive,
+      authenticCard,
+      stateAuthenticCard,
+      setStateAuthenticCard,
+      errorMessage,
+      setErrorMessage,
+      installments,
+      setInstallments,
+      endPayment,
+      removeCard,
+      orderNumber,
+    ],
+  );
 
   return (
-    <CheckoutContext.Provider
-      value={{
-        selectedAddressId,
-        setSelectedAddressId,
-        paymentMethod,
-        setPaymentMethod,
-        shippingOption,
-        setShippingOption,
-        calcShippingValue,
-        addUserCard,
-        listUserCard,
-        cvv,
-        setCvv,
-        modalActive,
-        setModalActive,
-        authenticCard,
-        selectedCard,
-        setSelectedCard,
-        stateAuthenticCard,
-        setStateAuthenticCard,
-        errorMessage,
-        setErrorMessage,
-        selectedMethod,
-        setSelectedMethod,
-        endPayment,
-      }}
-    >
+    <CheckoutContext.Provider value={contextValue}>
       {children}
     </CheckoutContext.Provider>
   );

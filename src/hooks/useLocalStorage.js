@@ -14,9 +14,23 @@ export const useLocalStorage = (key, initialValue) => {
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
-      console.error("Erro ao salvar no locaStorage", error);
+      console.error("Erro ao salvar no localStorage", error);
     }
   }, [key, value]);
+
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      if (event.key === key) {
+        setValue(event.newValue ? JSON.parse(event.newValue) : initialValue);
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [key, initialValue]);
 
   return [value, setValue];
 };

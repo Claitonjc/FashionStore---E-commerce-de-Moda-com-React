@@ -1,16 +1,32 @@
-import { InputTypeFieldset } from "../InputTypeFieldset/InputTypeFieldset";
 import { ImLocation } from "react-icons/im";
+import { IoMdClose } from "react-icons/io";
+
+// Components
+import { InputTypeFieldset } from "../InputTypeFieldset/InputTypeFieldset";
 
 export const AddressModal = ({ onClose, onSubmit, handleChange, formData }) => {
+  // =========================================================================
+  // 1. RENDER
+  // =========================================================================
   return (
     <div
-      className="absolute inset-0 flex items-center justify-center bg-black/40"
+      role="dialog"
+      aria-modal="true"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
       onClick={onClose}
     >
       <section
         onClick={(e) => e.stopPropagation()}
-        className="border-borders/30 flex flex-col items-center gap-4 rounded-xl border bg-white"
+        className="border-borders/30 relative flex max-h-[90vh] w-[90%] max-w-md flex-col items-center gap-4 overflow-y-auto rounded-xl border bg-white shadow-xl"
       >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Fechar modal"
+          className="hover:text-alert absolute top-4 right-4 cursor-pointer text-[24px] text-gray-500 transition-colors"
+        >
+          <IoMdClose />
+        </button>
         <p className="text-dark mt-5 flex items-center text-2xl font-semibold">
           <ImLocation className="text-button-primary" />
           Cadastrar Endereço
@@ -23,7 +39,7 @@ export const AddressModal = ({ onClose, onSubmit, handleChange, formData }) => {
             label="CEP*"
             type="text"
             name="cep"
-            value={formData.cep}
+            value={formData.cep || ""}
             onChange={handleChange}
           />
           <InputTypeFieldset

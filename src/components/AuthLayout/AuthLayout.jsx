@@ -1,4 +1,7 @@
 export const AuthLayout = ({ title, buttonText, children, onSubmit }) => {
+  // =========================================================================
+  // 1. RENDER
+  // =========================================================================
   return (
     <section className="border-borders/30 flex w-full max-w-md items-center justify-center rounded-2xl border bg-white p-10 shadow-md">
       <form

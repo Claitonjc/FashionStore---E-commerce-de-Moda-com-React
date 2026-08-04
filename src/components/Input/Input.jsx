@@ -1,4 +1,7 @@
 export const Input = ({ type, placeholder, label, onChange, value }) => {
+  // ==========================================================================
+  // 1. RENDER
+  // ==========================================================================
   return (
     <label className="text-dark mt-4 flex flex-col gap-1">
       {label}

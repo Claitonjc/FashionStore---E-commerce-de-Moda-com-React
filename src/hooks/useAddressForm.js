@@ -5,7 +5,9 @@ export const useAddressForm = () => {
   const context = useContext(AddressContext);
 
   if (!context) {
-    throw new Error("useAddressForm deve ser usado dentro de um AuthProvider");
+    throw new Error(
+      "useAddressForm deve ser usado dentro de um AddressProvider",
+    );
   }
 
   return context;

@@ -1,30 +1,49 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useState } from "react";
+
+// Hooks
+import { useUsers } from "../../hooks/useUsers";
+
+// Components
 import { Input } from "../../components/Input/Input";
 import { Header } from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
 import { AuthLayout } from "../../components/AuthLayout/AuthLayout";
-import { useState } from "react";
-import { useUsers } from "../../hooks/useUsers";
 
 export const Login = () => {
-  const { userValidation, message } = useUsers();
-
+  // ==========================================================================
+  // 1. STATES & HOOKS
+  // ==========================================================================
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login, message, userLogged } = useUsers();
 
+  // =========================================================================
+  // 2. Handlers
+  // =========================================================================
   const loginUser = (event) => {
     event.preventDefault();
 
-    userValidation(email, password);
+    login(email, password);
   };
 
+  // =========================================================================
+  // 3. GUARDS & REDIRECTS
+  // =========================================================================
+  if (userLogged) {
+    return <Navigate to="/" replace />;
+  }
+
+  // =========================================================================
+  // 4. RENDER
+  // =========================================================================
   return (
     <div className="flex min-h-screen flex-col font-[inter]">
       <Header />
       <main className="bg-general-background flex flex-1 flex-col items-center justify-center">
         <AuthLayout
-          title="Welcome Back"
-          buttonText="Sign in"
+          title="Bem vindo de volta!"
+          buttonText="Entrar"
           onSubmit={loginUser}
         >
           <div className="flex flex-col">
@@ -37,16 +56,16 @@ export const Login = () => {
             />
             <Input
               type="password"
-              placeholder="Password"
-              label="Password:"
+              placeholder="Senha"
+              label="Senha:"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
             <Link
-              to="#"
+              to="/forgotPassword"
               className="text-borders hover:text-dark mt-2 w-full self-end text-xs transition"
             >
-              Forgot my password
+              Esqueci minha senha
             </Link>
             <p className="text-alert mt-1 min-h-5 text-center text-[12px]">
               {message}

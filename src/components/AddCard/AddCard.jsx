@@ -1,25 +1,44 @@
 import { useState } from "react";
-import { InputTypeFieldset } from "../InputTypeFieldset/InputTypeFieldset";
+
+// Hooks
 import { useCheckout } from "../../hooks/useCheckout";
 
+// Components
+import { InputTypeFieldset } from "../InputTypeFieldset/InputTypeFieldset";
+
+// ==========================================================================
+// CONSTANTS
+// ==========================================================================
+const INITIAL_FORM = {
+  number: "",
+  name: "",
+  validity: "",
+  code: "",
+  alias: "",
+  cpf: "",
+  birth: "",
+};
+
 export const AddCard = () => {
-  const INITIAL_FORM = {
-    id: crypto.randomUUID(),
-    number: "",
-    name: "",
-    validity: "",
-    code: "",
-    alias: "",
-    cpf: "",
-    birth: "",
-  };
+  // ==========================================================================
+  // 1. STATES & HOOKS
+  // ==========================================================================
   const [formData, setFormData] = useState(INITIAL_FORM);
+
   const { addUserCard, setModalActive } = useCheckout();
 
+  // =========================================================================
+  // 2. ACTIONS
+  // =========================================================================
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    addUserCard(formData);
+    const newCard = {
+      ...formData,
+      id: crypto.randomUUID(),
+    };
+
+    addUserCard(newCard);
     setFormData(INITIAL_FORM);
     setModalActive(false);
   };
@@ -33,6 +52,9 @@ export const AddCard = () => {
     }));
   };
 
+  // =========================================================================
+  // 3. RENDER
+  // =========================================================================
   return (
     <form onSubmit={handleSubmit} className="flex flex-col items-center gap-5">
       <div className="flex w-full flex-col gap-3">
@@ -42,6 +64,8 @@ export const AddCard = () => {
           name="number"
           value={formData.number}
           onChange={handleChange}
+          required
+          maxLength={16}
         />
         <InputTypeFieldset
           label="Nome impresso no cartão*"
@@ -49,6 +73,7 @@ export const AddCard = () => {
           name="name"
           value={formData.name}
           onChange={handleChange}
+          required
         />
         <div className="flex gap-3">
           <InputTypeFieldset
@@ -57,6 +82,7 @@ export const AddCard = () => {
             name="validity"
             value={formData.validity}
             onChange={handleChange}
+            required
           />
           <InputTypeFieldset
             label="Código de verificação*"
@@ -64,6 +90,7 @@ export const AddCard = () => {
             name="code"
             value={formData.code}
             onChange={handleChange}
+            required
           />
         </div>
         <InputTypeFieldset
@@ -80,13 +107,16 @@ export const AddCard = () => {
             name="cpf"
             value={formData.cpf}
             onChange={handleChange}
+            required
+            maxLength={11}
           />
           <InputTypeFieldset
-            label="Data de nascimento"
+            label="Data de nascimento*"
             type="date"
             name="birth"
             value={formData.birth}
             onChange={handleChange}
+            required
           />
         </div>
       </div>

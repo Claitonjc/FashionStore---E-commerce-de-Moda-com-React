@@ -1,25 +1,52 @@
+// Hooks
 import { useFetch } from "../../hooks/useFetch";
+
+// Services
+import {
+  getProducts,
+  getProductsByCategory,
+} from "../../service/productService";
+
+// Components
 import { ProductCard } from "../ProductCard/ProductCard";
-import { getProdutos } from "../../service/productService";
-import { getProdutosPorCategoria } from "../../service/productService";
 import { ProductCardSkeleton } from "../ProductCardSkeleton/ProductCardSkeleton";
 
 export const ProductList = ({ filter }) => {
+  // =========================================================================
+  // 1. DERIVED DATA
+  // =========================================================================
   const productsFilter =
-    filter === "all" ? getProdutos : () => getProdutosPorCategoria(filter);
+    filter === "all" ? getProducts : () => getProductsByCategory(filter);
 
-  const { data: produtos, loading, error } = useFetch(productsFilter, [filter]);
+  // =========================================================================
+  // 2. STATES & HOOKS
+  // =========================================================================
+  const { data: products, loading, error } = useFetch(productsFilter, [filter]);
 
-  if (error) return <p>{error}</p>;
+  // =========================================================================
+  // 3. GUARDS (Early Returns)
+  // =========================================================================
+  if (error) {
+    return (
+      <div className="mb-10 flex w-full justify-center pt-20">
+        <p className="text-alert font-medium">
+          Erro ao carregar os produtos: {error}
+        </p>
+      </div>
+    );
+  }
 
+  // ==========================================================================
+  // 4. RENDER
+  // ==========================================================================
   return (
     <ul className="mt-10 mb-5 flex w-[90%] flex-wrap justify-center gap-6 px-4 pt-5 md:px-6 lg:px-8">
       {loading
         ? Array.from({ length: 8 }).map((_, index) => (
             <ProductCardSkeleton key={index} />
           ))
-        : (produtos || []).map((produto) => (
-            <ProductCard key={produto.id} produto={produto} />
+        : (products || []).map((product) => (
+            <ProductCard key={product.id} product={product} />
           ))}
     </ul>
   );

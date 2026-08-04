@@ -1,13 +1,19 @@
 import { api } from "./api";
 
-export const getProdutos = async () => {
-    return api('/products');
-}
+// search for all products
+export const getProducts = async () => {
+  const products = await api("/products");
+  return products;
+};
 
-export const getProdutoPorId = async (id) => {
-    return api(`/products/${id}`)
-}
+// searches for the product by ID
+export const getProductById = async (id) => {
+  const product = await api(`/products/${id}`);
+  return product;
+};
 
-export const getProdutosPorCategoria = async (category) => {
-    return api(`/products/category/${category}`)
-}
+// search for products by category
+export const getProductsByCategory = async (category) => {
+  const products = await api(`/products/category/${category}`);
+  return products;
+};

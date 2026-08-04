@@ -1,20 +1,32 @@
-import { Header } from "../../components/Header/Header";
-import { Footer } from "../../components/Footer/Footer";
+import { useState, useEffect, useCallback } from "react";
+import { Navigate } from "react-router-dom";
+
+// Hooks
 import { useUsers } from "../../hooks/useUsers";
 import { useCart } from "../../hooks/useCart";
-import { calcTotalPrice } from "../../utils/calculatePrice";
+import { useCheckout } from "../../hooks/useCheckout";
+import { useAddressForm } from "../../hooks/useAddressForm";
+
+// Components
+import { Header } from "../../components/Header/Header";
+import { Footer } from "../../components/Footer/Footer";
 import { OrderSummary } from "../../components/OrderSummary/OrderSummary";
 import { NavigationLink } from "../../components/NavigationLink/NavigationLink";
-import { ImLocation } from "react-icons/im";
-import { InputTypeFieldset } from "../../components/InputTypeFieldset/InputTypeFieldset";
 import { AddressList } from "../../components/AddressList/AddressList";
 import { AddressModal } from "../../components/AddressModal/AddresModal";
-import { useAddressForm } from "../../hooks/useAddressForm";
-import { useState } from "react";
-import { useCheckout } from "../../hooks/useCheckout";
+
+// Utils
+import { calcTotalPrice } from "../../utils/calculatePrice";
 
 export const Address = () => {
-  const [active, setActive] = useState(false);
+  // ========================================================================
+  // 1. STATES & HOOKS
+  // ========================================================================
+  const [isModalActive, setIsModalActive] = useState(false);
+
+  const { shippingOption } = useCheckout();
+  const { userLogged } = useUsers();
+  const { currentCart, isCartEmpty } = useCart();
   const {
     formData,
     handleChange,
@@ -23,134 +35,159 @@ export const Address = () => {
     setAddresses,
     removeAddress,
     editAddress,
+    selectedAddressId,
+    setSelectedAddressId,
   } = useAddressForm();
 
-  const { selectedAddressId, setSelectedAddressId, shippingOption } =
-    useCheckout();
+  // =========================================================================
+  // 2. DERIVED DATA & CALCULATIONS
+  // =========================================================================
+  const {
+    totalwithFreight,
+    installments,
+    totalWithDiscount,
+    installmentsWithFreight,
+    subTotal,
+    freight,
+  } = calcTotalPrice(currentCart);
 
-  const openModal = () => {
-    setActive(true);
-  };
+  const isExpress = shippingOption === "Entrega Expressa";
+  const finalTotal = isExpress ? totalwithFreight : subTotal;
+  const finalDiscount = isExpress
+    ? totalWithDiscount + freight
+    : totalWithDiscount;
+  const finalInstallments = isExpress ? installmentsWithFreight : installments;
 
-  const closeModal = () => {
-    setActive(false);
-  };
+  // =========================================================================
+  // 3. HANDLERS
+  // =========================================================================
+  const openModal = useCallback(() => {
+    setIsModalActive(true);
+  }, []);
 
-  const handleEdit = (id) => {
-    editAddress(id);
-    openModal();
-  };
+  const closeModal = useCallback(() => {
+    setIsModalActive(false);
+  }, []);
 
-  const submitAddress = (event) => {
-    handleSubmit(event);
-    closeModal();
-  };
+  const handleEdit = useCallback(
+    (id) => {
+      editAddress(id);
+      openModal();
+    },
+    [editAddress, openModal],
+  );
 
-  const { userLogged } = useUsers();
+  const submitAddress = useCallback(
+    (event) => {
+      handleSubmit(event);
+      closeModal();
+    },
+    [handleSubmit, closeModal],
+  );
 
-  const { carts } = useCart();
+  // =========================================================================
+  // 4. EFFECTS
+  // =========================================================================
+  useEffect(() => {
+    if (!selectedAddressId && addresses.length > 0) {
+      setSelectedAddressId(addresses[0].id);
+    }
+  }, [addresses, selectedAddressId, setSelectedAddressId]);
 
-  const userCart = carts.find((cart) => cart.userId === userLogged?.id);
-  const { total, portion, discount, subTotal, freight } =
-    calcTotalPrice(userCart);
+  // =========================================================================
+  // 5. GUARDS & REDIRECTS
+  // =========================================================================
+  if (!userLogged) {
+    return <Navigate to="/login" replace />;
+  }
 
+  if (isCartEmpty) {
+    return <Navigate to="/" replace />;
+  }
+
+  // =========================================================================
+  // 6. RENDER
+  // =========================================================================
   return (
     <div className="flex min-h-screen flex-col font-[inter]">
       <Header />
       <main className="bg-general-background relative flex flex-1 justify-center">
         <div className="flex w-full max-w-7xl flex-col justify-center lg:flex-row">
+          {/* Left Section: Address List */}
           <section className="w-full lg:w-[70%]">
-            {userLogged && (
-              <div className="bg-light border-borders/40 m-7 flex min-h-25 flex-col items-start gap-2 rounded-xl border p-5">
-                <h1 className="text-dark mb-5 w-full p-2 text-center text-[20px] font-semibold">
-                  Selecione ou cadastre um novo endereço
-                </h1>
-                <ul className="w-full">
-                  {addresses.length > 0 &&
-                    addresses.map((address) => (
-                      <AddressList
-                        key={address.id}
-                        cep={address.cep}
-                        street={address.street}
-                        number={address.number}
-                        district={address.district}
-                        city={address.city}
-                        uf={address.uf}
-                        addresses={addresses}
-                        setAddresses={setAddresses}
-                        id={address.id}
-                        removeAddress={removeAddress}
-                        handleEdit={handleEdit}
-                        openModal={openModal}
-                        value={address.id}
-                        checked={selectedAddressId === address.id}
-                        onChange={(event) =>
-                          setSelectedAddressId(event.target.value)
-                        }
-                      />
-                    ))}
-                </ul>
-                <a
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    openModal();
-                  }}
-                  className="cursor-pointer underline"
-                >
-                  Cadastrar novo endereço
-                </a>
-              </div>
-            )}
-          </section>
-          {userLogged && (
-            <section className="flex w-full flex-col lg:w-[30%]">
-              <OrderSummary
-                subTotal={subTotal}
-                total={
-                  shippingOption === "Entrega Expressa"
-                    ? total
-                    : total - freight
-                }
-                discount={
-                  shippingOption === "Entrega Expressa"
-                    ? discount
-                    : discount - freight
-                }
-                portion={
-                  shippingOption === "Entrega Expressa"
-                    ? portion
-                    : subTotal / 10
-                }
-              />
-              <div className="border-borders/30 sticky top-70 m-7 flex flex-col gap-3 rounded-xl border bg-white p-5 text-center">
-                {!selectedAddressId ? (
-                  <div className="relative flex flex-col">
-                    <p className="text-dark absolute -top-4.5 left-[25%] text-[12px]">
-                      Selecione um endereço
-                    </p>
-                    <NavigationLink
-                      rout="#"
-                      text="Continuar"
-                      variant="linkButton"
+            <div className="bg-light border-borders/40 m-7 flex min-h-25 flex-col items-start gap-2 rounded-xl border p-5">
+              <h1 className="text-dark mb-5 w-full p-2 text-center text-[20px] font-semibold">
+                Selecione ou cadastre um novo endereço
+              </h1>
+              <ul className="w-full">
+                {addresses.length > 0 &&
+                  addresses.map((address) => (
+                    <AddressList
+                      key={address.id}
+                      cep={address.cep}
+                      street={address.street}
+                      number={address.number}
+                      district={address.district}
+                      city={address.city}
+                      uf={address.uf}
+                      addresses={addresses}
+                      setAddresses={setAddresses}
+                      id={address.id}
+                      removeAddress={removeAddress}
+                      handleEdit={handleEdit}
+                      openModal={openModal}
+                      value={address.id}
+                      checked={selectedAddressId === address.id}
+                      onChange={(event) =>
+                        setSelectedAddressId(event.target.value)
+                      }
                     />
-                  </div>
-                ) : (
-                  <NavigationLink
-                    rout="/shipping"
-                    text="Continuar"
-                    variant="linkButton"
-                  />
+                  ))}
+              </ul>
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  openModal();
+                }}
+                className="cursor-pointer underline"
+              >
+                Cadastrar novo endereço
+              </button>
+            </div>
+          </section>
+          {/* Right Section: Order Summary */}
+          <section className="flex w-full flex-col lg:w-[30%]">
+            <OrderSummary
+              subTotal={subTotal}
+              total={finalTotal}
+              discount={finalDiscount}
+              portion={finalInstallments}
+            />
+            <div className="border-borders/30 sticky top-70 m-7 flex flex-col gap-3 rounded-xl border bg-white p-5 text-center">
+              <div className="relative flex flex-col">
+                {!selectedAddressId && (
+                  <p className="text-dark absolute -top-4.5 left-[25%] text-[12px]">
+                    Selecione um endereço
+                  </p>
                 )}
                 <NavigationLink
-                  rout="/carrinho"
-                  text="Voltar"
-                  variant="linkButtonWhite"
+                  to="/shipping"
+                  text="Continuar"
+                  variant="linkButton"
+                  disabled={!selectedAddressId}
                 />
               </div>
-            </section>
-          )}
+              <NavigationLink
+                to="/cart"
+                text="Voltar"
+                variant="linkButtonWhite"
+              />
+            </div>
+          </section>
         </div>
-        {active && (
+        {/* Address Modal */}
+        {isModalActive && (
           <AddressModal
             onClose={closeModal}
             onSubmit={submitAddress}

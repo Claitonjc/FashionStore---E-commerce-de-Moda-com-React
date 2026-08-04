@@ -1,4 +1,7 @@
 export const Footer = () => {
+  // ==========================================================================
+  // 1. RENDER
+  // ==========================================================================
   return (
     <footer className="bg-dark text-light flex flex-col items-center justify-center gap-7 px-4 py-8 text-center">
       <div>

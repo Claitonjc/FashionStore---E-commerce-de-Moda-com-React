@@ -15,9 +15,12 @@ export const AddressList = ({
   checked,
   onChange,
 }) => {
+  // =========================================================================
+  // 1. RENDER
+  // =========================================================================
   return (
     <li className="border-borders bg-general-background mb-5 flex w-full items-center justify-between gap-3 rounded-xl border p-3">
-      <label className="flex cursor-pointer gap-3" key={id}>
+      <label className="flex cursor-pointer gap-3">
         <input
           type="radio"
           className="cursor-pointer"
@@ -30,18 +33,20 @@ export const AddressList = ({
       </label>
       <div className="flex items-center gap-3">
         <button
+          aria-label="Editar Endereço"
           type="button"
-          className="cursor-pointer"
+          className="cursor-pointer text-[18px] text-black transition-colors hover:text-gray-600"
           onClick={() => handleEdit(id)}
         >
           <LuPencil />
         </button>
         <button
+          aria-label="Excluir Endereço"
           type="button"
-          className="cursor-pointer"
+          className="hover:text-alert cursor-pointer text-[20px] text-black transition-colors"
           onClick={() => removeAddress(id)}
         >
-          <CiTrash className="hover:text-alert text-[20px] text-black" />
+          <CiTrash />
         </button>
       </div>
     </li>

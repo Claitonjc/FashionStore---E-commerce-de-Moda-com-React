@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "../pages/Home/Home";
 import { ProductDetails } from "../pages/ProductsDetails/ProductDetails";
-import { Carrinho } from "../pages/Carrinho/Carrinho";
+import { Cart } from "../pages/Cart/Cart";
 import { Login } from "../pages/Login/Login";
 import { Register } from "../pages/Register/Register";
 import { UsersProvider } from "../context/UsersContext/UsersProvider";
@@ -11,6 +11,7 @@ import { Shipping } from "../pages/Shipping/Shipping";
 import { Checkout } from "../pages/Checkout/Checkout";
 import { PurchaseComplete } from "../pages/PurchaseComplete/PurchaseComplete";
 import { Profile } from "../pages/Profile/Profile";
+import { ForgotPassword } from "../pages/ForgotPassword/ForgotPassword";
 
 export const AppRoutes = () => {
   return (
@@ -18,8 +19,9 @@ export const AppRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/details/:id" element={<ProductDetails />} />
-      <Route path="/carrinho" element={<Carrinho />} />
+      <Route path="/cart" element={<Cart />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/forgotPassword" element={<ForgotPassword />} />
       <Route path="/register" element={<Register />} />
       <Route path="/address" element={<Address />} />
       <Route path="/payment" element={<Payment />} />

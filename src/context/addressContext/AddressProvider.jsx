@@ -1,50 +1,81 @@
-import { useEffect, useState } from "react";
-import { useFetch } from "../../hooks/useFetch";
-import { getAddress } from "../../service/addressService";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+// Context
 import { AddressContext } from "./AddressContext";
 
+// Hooks
+import { useFetch } from "../../hooks/useFetch";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+
+// Utils
+import { getAddress } from "../../service/getAddress";
+
+// ==========================================================================
+// CONSTANTS
+// ==========================================================================
+const INITIAL_FORM = {
+  cep: "",
+  street: "",
+  number: "",
+  district: "",
+  city: "",
+  uf: "",
+};
+
 export const AddressProvider = ({ children }) => {
-  const INITIAL_FORM = {
-    id: crypto.randomUUID(),
-    cep: "",
-    street: "",
-    number: "",
-    district: "",
-    city: "",
-    uf: "",
-  };
+  // ===========================================================================
+  // 1.STATES & HOOKS
+  // ===========================================================================
   const [cep, setCep] = useState("");
   const [formData, setFormData] = useState(INITIAL_FORM);
-  const [addresses, setAddresses] = useLocalStorage("addresses", []);
   const [editingId, setEditingId] = useState(null);
 
-  const {
-    data: address,
-    loading,
-    error,
-  } = useFetch(() => {
-    if (cep.length !== 8) return null;
-    return getAddress(cep);
+  const [addresses, setAddresses] = useLocalStorage("addresses", []);
+  const [selectedAddressId, setSelectedAddressId] = useLocalStorage(
+    "addressSelected",
+    "",
+  );
+
+  const { data: address } = useFetch(() => {
+    const cleanCep = cep.replace(/\D/g, "");
+
+    if (cleanCep.length !== 8) return null;
+    return getAddress(cleanCep);
   }, [cep]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  // Derived variable: Searches for the selected address.
+  const currentAddress = addresses.find(
+    (item) => item.id === selectedAddressId,
+  );
 
-    if (editingId) {
-      setAddresses((prev) =>
-        prev.map((address) =>
-          address.id === formData.id ? formData : address,
-        ),
-      );
-      setFormData(INITIAL_FORM);
-    } else {
-      setAddresses((prev) => [...prev, formData]);
-      setFormData(INITIAL_FORM);
-    }
-  };
+  // ===========================================================================
+  // 2.ACTIONS (Business Rules and Address Logic)
+  // ===========================================================================
 
-  const handleChange = (event) => {
+  const handleSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      if (editingId) {
+        setAddresses((prev) =>
+          prev.map((address) =>
+            address.id === formData.id ? formData : address,
+          ),
+        );
+        setEditingId(null);
+      } else {
+        const newAddress = {
+          ...formData,
+          id: crypto.randomUUID(),
+        };
+        setAddresses((prev) => [...prev, newAddress]);
+      }
+      setFormData(INITIAL_FORM);
+    },
+    [editingId, formData, setAddresses],
+  );
+
+  const handleChange = useCallback((event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({
       ...prev,
@@ -54,21 +85,31 @@ export const AddressProvider = ({ children }) => {
     if (name === "cep") {
       setCep(value);
     }
-  };
+  }, []);
 
-  const removeAddress = (id) => {
-    setAddresses((prev) => prev.filter((item) => item.id !== id));
-  };
+  const removeAddress = useCallback(
+    (id) => {
+      setAddresses((prev) => prev.filter((item) => item.id !== id));
+      setSelectedAddressId(null);
+    },
+    [setAddresses, setSelectedAddressId],
+  );
 
-  const editAddress = (id) => {
-    const addressToEdit = addresses.find((item) => item.id === id);
+  const editAddress = useCallback(
+    (id) => {
+      const addressToEdit = addresses.find((item) => item.id === id);
 
-    if (!addressToEdit) return;
+      if (!addressToEdit) return;
 
-    setFormData(addressToEdit);
-    setEditingId(id);
-  };
+      setFormData(addressToEdit);
+      setEditingId(id);
+    },
+    [addresses],
+  );
 
+  // ==============================================================================
+  // 3.SIDE EFFECTS
+  // ==============================================================================
   useEffect(() => {
     if (!address) return;
 
@@ -83,18 +124,40 @@ export const AddressProvider = ({ children }) => {
     }));
   }, [address]);
 
+  // ================================================================================
+  // 4.MEMOIZATION & RETURN
+  // ================================================================================
+  const contextValue = useMemo(
+    () => ({
+      formData,
+      addresses,
+      selectedAddressId,
+      editingId,
+      handleChange,
+      handleSubmit,
+      removeAddress,
+      editAddress,
+      setAddresses,
+      setSelectedAddressId,
+      currentAddress,
+    }),
+    [
+      formData,
+      addresses,
+      selectedAddressId,
+      editingId,
+      handleChange,
+      handleSubmit,
+      removeAddress,
+      editAddress,
+      setAddresses,
+      setSelectedAddressId,
+      currentAddress,
+    ],
+  );
+
   return (
-    <AddressContext.Provider
-      value={{
-        formData,
-        handleChange,
-        handleSubmit,
-        addresses,
-        setAddresses,
-        removeAddress,
-        editAddress,
-      }}
-    >
+    <AddressContext.Provider value={contextValue}>
       {children}
     </AddressContext.Provider>
   );
