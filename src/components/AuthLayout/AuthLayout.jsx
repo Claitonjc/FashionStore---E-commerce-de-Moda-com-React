@@ -8,7 +8,7 @@ export const AuthLayout = ({ title, buttonText, children, onSubmit }) => {
         onSubmit={onSubmit}
         className="text-dark flex flex-col items-center justify-center gap-5"
       >
-        <h1 className="text-3xl">{title}</h1>
+        <h1 className="flex items-center gap-2 text-3xl">{title}</h1>
         {children}
         <button
           type="submit"

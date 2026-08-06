@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import { useState } from "react";
 
 // Hooks
 import { useUsers } from "../../hooks/useUsers";
@@ -10,27 +11,21 @@ import { AuthLayout } from "../../components/AuthLayout/AuthLayout";
 import { Input } from "../../components/Input/Input";
 import { Footer } from "../../components/Footer/Footer";
 
+// Utils
+import { maskPhone, maskCpf } from "../../utils/masks";
+
 export const Register = () => {
   // ==========================================================================
   // 1. STATES & HOOKS
   // ==========================================================================
-  const {
-    register,
-    message,
-    userLogged,
-    name,
-    setName,
-    email,
-    setEmail,
-    cpf,
-    setCpf,
-    date,
-    setDate,
-    phone,
-    setPhone,
-    password,
-    setPassword,
-  } = useUsers();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [date, setDate] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const { register, message, userLogged } = useUsers();
 
   // =========================================================================
   // 2. ACTIONS
@@ -42,6 +37,9 @@ export const Register = () => {
     setName("");
     setEmail("");
     setPassword("");
+    setCpf("");
+    setDate("");
+    setPhone("");
   };
 
   // =========================================================================
@@ -84,7 +82,7 @@ export const Register = () => {
                 placeholder="CPF"
                 label="CPF:"
                 value={cpf}
-                onChange={(event) => setCpf(event.target.value)}
+                onChange={(event) => setCpf(maskCpf(event.target.value))}
               />
               <Input
                 type="date"
@@ -100,7 +98,7 @@ export const Register = () => {
                 placeholder="Telefone Celular"
                 label="Telefone/Celular:"
                 value={phone}
-                onChange={(event) => setPhone(event.target.value)}
+                onChange={(event) => setPhone(maskPhone(event.target.value))}
               />
               <Input
                 type="password"

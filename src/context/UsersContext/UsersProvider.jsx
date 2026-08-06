@@ -11,13 +11,6 @@ export const UsersProvider = ({ children }) => {
   // ===================================================================
   // 1.STATES & HOOKS
   // ===================================================================
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [date, setDate] = useState("");
-  const [phone, setPhone] = useState("");
-
   const navigate = useNavigate();
   const [message, setMessage] = useState(null);
   const timeOutRef = useRef(null);
@@ -87,6 +80,31 @@ export const UsersProvider = ({ children }) => {
     navigate("/");
   }, [navigate, setUserLogged]);
 
+  const editingUser = useCallback(
+    (formData) => {
+      const updateUser = { ...userLogged, ...formData };
+
+      setUserLogged(updateUser);
+
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === updateUser.id ? updateUser : user,
+        ),
+      );
+
+      navigate("/");
+    },
+    [navigate, setUserLogged, setUsers, userLogged],
+  );
+
+  const deleteAccount = useCallback(
+    (account) => {
+      const listUsers = users.filter((user) => user.id !== account.id);
+      setUsers(listUsers);
+    },
+    [setUsers, users],
+  );
+
   // =================================================================
   // 4.EFFECTS (Cleaning)
   // =================================================================
@@ -108,18 +126,8 @@ export const UsersProvider = ({ children }) => {
       userLogged,
       setUserLogged,
       register,
-      email,
-      setEmail,
-      password,
-      setPassword,
-      name,
-      setName,
-      cpf,
-      setCpf,
-      date,
-      setDate,
-      phone,
-      setPhone,
+      editingUser,
+      deleteAccount,
     }),
     [
       users,
@@ -129,18 +137,8 @@ export const UsersProvider = ({ children }) => {
       userLogged,
       setUserLogged,
       register,
-      email,
-      setEmail,
-      name,
-      setName,
-      cpf,
-      setCpf,
-      date,
-      setDate,
-      phone,
-      setPhone,
-      password,
-      setPassword,
+      editingUser,
+      deleteAccount,
     ],
   );
 
