@@ -155,13 +155,19 @@ export const CartProvider = ({ children }) => {
   );
 
   const clearCart = useCallback(() => {
-    if (!currentCart || !userLogged) return;
+    if (!userLogged) return;
 
-    const newCart = { ...currentCart, items: [] };
     setCarts((prevCarts) =>
-      prevCarts.map((cart) => (cart.userId === userLogged.id ? newCart : cart)),
+      prevCarts.map((cart) => {
+        if (cart.userId === userLogged.id) {
+          if (cart.items.length === 0) return cart;
+
+          return { ...cart, items: [] };
+        }
+        return cart;
+      }),
     );
-  }, [setCarts, userLogged, currentCart]);
+  }, [setCarts, userLogged]);
 
   // ===================================================================
   // 3.EFFECTS (Life Cicle)

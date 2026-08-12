@@ -97,6 +97,19 @@ export const UsersProvider = ({ children }) => {
     [navigate, setUserLogged, setUsers, userLogged],
   );
 
+  const editingPassword = useCallback(
+    (user, formData) => {
+      const updateUser = { ...user, ...formData };
+
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === updateUser.id ? updateUser : user,
+        ),
+      );
+    },
+    [setUsers],
+  );
+
   const deleteAccount = useCallback(
     (account) => {
       const listUsers = users.filter((user) => user.id !== account.id);
@@ -128,6 +141,7 @@ export const UsersProvider = ({ children }) => {
       register,
       editingUser,
       deleteAccount,
+      editingPassword,
     }),
     [
       users,
@@ -139,6 +153,7 @@ export const UsersProvider = ({ children }) => {
       register,
       editingUser,
       deleteAccount,
+      editingPassword,
     ],
   );
 

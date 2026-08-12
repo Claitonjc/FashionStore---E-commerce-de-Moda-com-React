@@ -95,10 +95,10 @@ export const CreditCard = () => {
         </ul>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex flex-col items-center gap-2 sm:flex-row">
         <InputTypeFieldset
           label="CVV*"
-          type="text"
+          type="password"
           name="cvv"
           value={cvv}
           onChange={(event) => setCvv(event.target.value)}

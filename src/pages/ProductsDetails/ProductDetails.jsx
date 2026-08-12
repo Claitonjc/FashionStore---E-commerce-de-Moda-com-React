@@ -42,7 +42,7 @@ export const ProductDetails = () => {
     <div className="flex min-h-screen flex-col font-[inter]">
       <Header title="Fashion Store" />
       <main className="bg-general-background flex flex-1 flex-col items-center">
-        <nav className="border-borders flex w-full items-center justify-between border p-1">
+        <nav className="border-borders/40 flex w-full items-center justify-between border-b-2 p-1">
           <NavigationLink to={"/"} text="← Retornar para a loja" />
         </nav>
         {loading ? <ProductInfoSkeleton /> : <ProductInfo product={product} />}

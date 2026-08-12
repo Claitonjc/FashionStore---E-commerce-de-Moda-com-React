@@ -22,7 +22,7 @@ export const Checkout = () => {
 
   // Custom Hooks
   const { userLogged } = useUsers();
-  const { currentCart } = useCart();
+  const { currentCart, isCartEmpty } = useCart();
   const {
     shippingOption,
     errorMessage,
@@ -55,6 +55,10 @@ export const Checkout = () => {
     return <Navigate to="/login" replace />;
   }
 
+  if (isCartEmpty) {
+    return <Navigate to="/" replace />;
+  }
+
   // =========================================================================
   // 5. RENDER
   // =========================================================================
@@ -69,7 +73,7 @@ export const Checkout = () => {
                 Revisão
               </h1>
               <div className="w-full">
-                <div className="flex gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row">
                   <div className="border-borders bg-general-background mb-5 flex w-full flex-col items-start gap-2 rounded-xl border p-3 text-[12px]">
                     <h2 className="text-[14px] font-semibold">
                       Informações da conta:

@@ -86,10 +86,9 @@ export const CheckoutProvider = ({ children }) => {
    * Finalizes the order, clears the cart, and redirects to the success screen.
    */
   const endPayment = useCallback(() => {
-    clearCart();
     handleFinishPayment();
     navigate("/complete");
-  }, [clearCart, navigate, handleFinishPayment]);
+  }, [navigate, handleFinishPayment]);
 
   // ===========================================================================
   // 3.MEMOIZATION & RETURN

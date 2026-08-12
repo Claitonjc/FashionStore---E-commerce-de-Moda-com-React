@@ -21,7 +21,7 @@ export const Shipping = () => {
   // ==========================================================================
   const { userLogged } = useUsers();
   const { shippingOption, setShippingOption } = useCheckout();
-  const { currentCart } = useCart();
+  const { currentCart, isCartEmpty } = useCart();
 
   // ==========================================================================
   // 2. DERIVED DATA & CALCULATIONS
@@ -48,6 +48,10 @@ export const Shipping = () => {
   // ==========================================================================
   if (!userLogged) {
     return <Navigate to="/login" replace />;
+  }
+
+  if (isCartEmpty) {
+    return <Navigate to="/" replace />;
   }
 
   // ==========================================================================

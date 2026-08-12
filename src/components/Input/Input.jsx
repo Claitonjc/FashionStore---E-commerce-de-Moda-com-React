@@ -1,4 +1,12 @@
-export const Input = ({ type, placeholder, label, onChange, value }) => {
+export const Input = ({
+  type,
+  placeholder,
+  label,
+  onChange,
+  value,
+  name,
+  disabled,
+}) => {
   // ==========================================================================
   // 1. RENDER
   // ==========================================================================
@@ -8,10 +16,12 @@ export const Input = ({ type, placeholder, label, onChange, value }) => {
       <input
         type={type}
         placeholder={placeholder}
+        name={name}
         onChange={onChange}
         value={value}
         required
-        className="border-borders/30 focus:outline-borders/60 w-full max-w-sm rounded-xl border bg-white p-2"
+        disabled={disabled}
+        className="border-borders/30 focus:outline-borders/60 w-full max-w-md rounded-xl border bg-white p-2 pr-12"
       />
     </label>
   );

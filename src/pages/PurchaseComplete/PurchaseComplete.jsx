@@ -10,6 +10,7 @@ import { useCart } from "../../hooks/useCart";
 import { Header } from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
 import { NavigationLink } from "../../components/NavigationLink/NavigationLink";
+import { useEffect } from "react";
 
 export const PurchaseComplete = () => {
   // ==========================================================================
@@ -17,21 +18,24 @@ export const PurchaseComplete = () => {
   // ==========================================================================
   const { orderNumber } = useCheckout();
   const { userLogged } = useUsers();
-  const { isCartEmpty } = useCart();
+  const { clearCart } = useCart();
 
   // =========================================================================
-  // 2. GUARDS & REDIRECTS
+  // 2. EFFECTS
+  // =========================================================================
+  useEffect(() => {
+    clearCart();
+  }, [clearCart]);
+
+  // =========================================================================
+  // 3. GUARDS & REDIRECTS
   // =========================================================================
   if (!userLogged) {
     return <Navigate to="/login" replace />;
   }
 
-  if (isCartEmpty) {
-    return <Navigate to="/" replace />;
-  }
-
   // =========================================================================
-  // 3. RENDER
+  // 4. RENDER
   // =========================================================================
   return (
     <div className="flex min-h-screen flex-col font-[inter]">

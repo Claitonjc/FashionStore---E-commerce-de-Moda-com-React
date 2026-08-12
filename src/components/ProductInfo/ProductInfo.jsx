@@ -45,12 +45,16 @@ export const ProductInfo = ({ product }) => {
   // =========================================================================
   return (
     <div
-      className={`bg-light border-borders/40 text-dark m-5 flex min-h-130 w-[70%] flex-row justify-around gap-8 rounded-2xl border p-6 shadow-md`}
+      className={`bg-light border-borders/40 text-dark m-5 flex min-h-130 flex-col items-center justify-around gap-8 rounded-2xl border p-6 shadow-md md:w-[60%] lg:w-[70%] lg:flex-row`}
     >
-      <picture className="flex w-full justify-center">
-        <img src={product.image} alt={product.title} className="p-4" />
+      <picture className="flex max-h-100 w-full flex-1 justify-center">
+        <img
+          src={product.image}
+          alt={product.title}
+          className="h-auto w-full object-contain p-4"
+        />
       </picture>
-      <section className="m-2 flex flex-col gap-6 p-3 text-justify">
+      <section className="m-2 flex flex-1 flex-col gap-6 p-3 text-justify">
         <div>
           <h1 className="text-2xl font-semibold">{product.title}</h1>
           <h2 className="text-left text-[12px]">
