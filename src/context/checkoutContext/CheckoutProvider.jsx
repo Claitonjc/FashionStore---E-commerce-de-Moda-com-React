@@ -2,11 +2,10 @@ import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Context
-import { CheckoutContext } from "./checkoutContext";
+import { CheckoutContext } from "./checkoutContext/CheckoutContext";
 
 // Hooks
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { useCart } from "../../hooks/useCart";
 
 export const CheckoutProvider = ({ children }) => {
   // =================================================================
@@ -18,7 +17,6 @@ export const CheckoutProvider = ({ children }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const { clearCart } = useCart();
   const [orderNumber, setOrderNumber] = useLocalStorage("orderNumber", null);
   const [paymentMethod, setPaymentMethod] = useLocalStorage(
     "paymentMethod",

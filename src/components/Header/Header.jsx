@@ -6,7 +6,7 @@ import { useCart } from "../../hooks/useCart";
 import { useUsers } from "../../hooks/useUsers";
 
 // Assets (Imagens, ícones locais, SVGs)
-import logofundopreto from "../../assets/logofundopreto.png";
+import logoFundoPreto from "../../assets/logoFundoPreto.png";
 
 export const Header = () => {
   // ==========================================================================
@@ -27,7 +27,7 @@ export const Header = () => {
     <header className="bg-dark flex h-40 w-full flex-col items-center justify-center sm:relative sm:h-28">
       <Link to="/">
         <img
-          src={logofundopreto}
+          src={logoFundoPreto}
           alt="Página principal da Fashion Store"
           className="w-62.5 p-2 sm:w-75"
         />
