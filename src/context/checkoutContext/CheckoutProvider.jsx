@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Context
-import { CheckoutContext } from "./checkoutContext/CheckoutContext";
+import { CheckoutContext } from "./CheckoutContext";
 
 // Hooks
 import { useLocalStorage } from "../../hooks/useLocalStorage";
