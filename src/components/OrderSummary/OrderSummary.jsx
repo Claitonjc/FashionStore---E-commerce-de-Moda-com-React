@@ -12,7 +12,7 @@ export const OrderSummary = ({
   // 1. RENDER
   // ==========================================================================
   return (
-    <aside className="border-borders/30 sticky top-5 m-7 flex h-fit flex-col gap-2 rounded-xl border bg-white p-5">
+    <aside className="border-borders/30 static m-7 flex h-fit flex-col gap-2 rounded-xl border bg-white p-5 [@media(min-height:650px)]:sticky [@media(min-height:650px)]:top-5">
       <h2 className="text-[20px] font-semibold">Resumo do pedido</h2>
       <div className="mt-2 flex flex-col justify-between gap-3 border-b-2 pb-4 text-[12px]">
         <div className="flex items-center justify-between">
