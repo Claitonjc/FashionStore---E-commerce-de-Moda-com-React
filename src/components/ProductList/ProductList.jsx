@@ -40,7 +40,7 @@ export const ProductList = ({ filter }) => {
   // 4. RENDER
   // ==========================================================================
   return (
-    <ul className="mt-10 mb-5 flex w-[80%] flex-wrap justify-center gap-3 px-4 pt-5 sm:w-[90%] md:gap-6 md:px-6 lg:px-8">
+    <ul className="mt-10 mb-5 flex w-full flex-wrap justify-center gap-3 px-4 pt-5 sm:w-[90%] md:gap-6 md:px-6 lg:px-8">
       {loading
         ? Array.from({ length: 8 }).map((_, index) => (
             <ProductCardSkeleton key={index} />
