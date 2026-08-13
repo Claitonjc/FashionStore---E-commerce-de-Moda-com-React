@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { BsCart3 } from "react-icons/bs";
-import { useState } from "react";
 
 // Hooks
 import { useCart } from "../../hooks/useCart";
-import { useUsers } from "../../hooks/useUsers";
 
 // Utils
 import { FormatPrice } from "../FormatPrice/FormatPrice";
@@ -13,11 +11,9 @@ export const ProductCard = ({ product }) => {
   // ==========================================================================
   // 1. STATES & HOOKS
   // ==========================================================================
-  const [notLoggedMessage, setNotLoggedMessage] = useState(null);
   const navigate = useNavigate();
 
-  const { productId, addToCart } = useCart();
-  const { userLogged } = useUsers();
+  const { productId } = useCart();
 
   // =========================================================================
   // 2. ACTIONS
@@ -26,20 +22,6 @@ export const ProductCard = ({ product }) => {
     if (event.key === "Enter") {
       goToDetails();
     }
-  };
-
-  const handleAddToCart = (item, event) => {
-    event.stopPropagation();
-    if (!userLogged) {
-      setNotLoggedMessage("Você não está logado");
-
-      setTimeout(() => {
-        setNotLoggedMessage(null);
-      }, 3000);
-      return;
-    }
-
-    addToCart(item);
   };
 
   const goToDetails = () => {
@@ -75,20 +57,6 @@ export const ProductCard = ({ product }) => {
       {productId === product.id && (
         <p className="text-alert text-[12px]">O item já está no carrinho!</p>
       )}
-
-      {/* If the user is not logged in, the message appears */}
-      {notLoggedMessage && (
-        <p className="text-alert text-[12px]">{notLoggedMessage}</p>
-      )}
-
-      {/* <button
-        type="button"
-        onClick={(event) => handleAddToCart(product, event)}
-        className="bg-button-primary hover:bg-button-hover flex cursor-pointer items-center gap-2 rounded-xl px-6 py-3 font-medium tracking-wide shadow-sm transition-all duration-300 active:scale-95"
-      >
-        <BsCart3 />
-        Adicionar ao carrinho
-      </button> */}
     </li>
   );
 };
