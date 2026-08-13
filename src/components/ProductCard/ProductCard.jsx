@@ -35,7 +35,7 @@ export const ProductCard = ({ product }) => {
     <li
       role="button"
       tabIndex={0}
-      className="text-dark border-borders/40 bg-light flex h-50 w-35 cursor-pointer flex-col items-center justify-between rounded-2xl border p-2 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:h-auto sm:w-72 md:gap-4 md:p-5"
+      className="text-dark border-borders/40 bg-light flex h-60 w-40 cursor-pointer flex-col items-center justify-between rounded-2xl border p-2 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:h-auto sm:w-72 md:gap-4 md:p-5"
       onClick={goToDetails}
       onKeyDown={handleKeyDown}
     >
