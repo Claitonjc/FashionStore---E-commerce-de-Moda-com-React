@@ -53,7 +53,7 @@ export const ProductCard = ({ product }) => {
     <li
       role="button"
       tabIndex={0}
-      className="text-dark border-borders/40 bg-light flex w-60 cursor-pointer flex-col items-center justify-between gap-4 rounded-2xl border p-5 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:w-72"
+      className="text-dark border-borders/40 bg-light flex h-50 w-35 cursor-pointer flex-col items-center justify-between rounded-2xl border p-2 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:h-auto sm:w-72 md:gap-4 md:p-5"
       onClick={goToDetails}
       onKeyDown={handleKeyDown}
     >
@@ -61,7 +61,7 @@ export const ProductCard = ({ product }) => {
         {product.title}
       </h2>
 
-      <picture className="flex h-64 items-center justify-center">
+      <picture className="flex h-30 items-center justify-center sm:h-60">
         <img
           src={product.image}
           alt={product.title}
@@ -81,14 +81,14 @@ export const ProductCard = ({ product }) => {
         <p className="text-alert text-[12px]">{notLoggedMessage}</p>
       )}
 
-      <button
+      {/* <button
         type="button"
         onClick={(event) => handleAddToCart(product, event)}
         className="bg-button-primary hover:bg-button-hover flex cursor-pointer items-center gap-2 rounded-xl px-6 py-3 font-medium tracking-wide shadow-sm transition-all duration-300 active:scale-95"
       >
         <BsCart3 />
         Adicionar ao carrinho
-      </button>
+      </button> */}
     </li>
   );
 };
