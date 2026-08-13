@@ -76,7 +76,7 @@ export const Register = () => {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
-            <div className="flex flex-col lg:flex-row">
+            <div className="flex flex-col gap-2 lg:flex-row">
               <Input
                 type="text"
                 placeholder="CPF"
@@ -92,7 +92,7 @@ export const Register = () => {
                 onChange={(event) => setDate(event.target.value)}
               />
             </div>
-            <div className="flex flex-col lg:flex-row">
+            <div className="flex flex-col gap-2 lg:flex-row">
               <Input
                 type="text"
                 placeholder="Telefone Celular"

@@ -11,7 +11,6 @@ import { Shipping } from "../pages/Shipping/Shipping";
 import { Checkout } from "../pages/Checkout/Checkout";
 import { PurchaseComplete } from "../pages/PurchaseComplete/PurchaseComplete";
 import { Profile } from "../pages/Profile/Profile";
-import { ForgotPassword } from "../pages/ForgotPassword/ForgotPassword";
 
 export const AppRoutes = () => {
   return (
@@ -21,7 +20,6 @@ export const AppRoutes = () => {
       <Route path="/details/:id" element={<ProductDetails />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/forgotPassword" element={<ForgotPassword />} />
       <Route path="/register" element={<Register />} />
       <Route path="/address" element={<Address />} />
       <Route path="/payment" element={<Payment />} />
