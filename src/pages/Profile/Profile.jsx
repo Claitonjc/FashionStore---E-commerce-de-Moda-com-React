@@ -65,7 +65,7 @@ export const Profile = () => {
     <div className="flex min-h-screen flex-col font-[inter]">
       <Header />
       <main className="bg-general-background flex flex-1 flex-col items-center justify-center">
-        <div className="border-borders/40 m-7 flex min-h-25 w-[60%] flex-col items-center gap-2 rounded-xl border bg-white p-15">
+        <div className="border-borders/40 m-7 flex min-h-25 w-[80%] flex-col items-center gap-2 rounded-xl border bg-white p-3 lg:w-[60%] lg:p-15">
           <nav className="flex w-full items-center justify-between">
             <NavigationLink to={"/"} text="← Retornar para a loja" />
           </nav>
@@ -77,7 +77,7 @@ export const Profile = () => {
           </div>
           <form
             onSubmit={handleSubmit}
-            className="flex w-full flex-col items-center gap-3 p-6"
+            className="flex w-full flex-col items-center gap-3 lg:p-6"
           >
             <div className="border-borders/15 bg-light flex w-full items-center rounded-2xl border">
               <InputTypeFieldset
@@ -88,7 +88,7 @@ export const Profile = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="flex w-full gap-3">
+            <div className="flex w-full flex-col gap-3 lg:flex-row">
               <div className="border-borders/15 bg-light flex w-full items-center rounded-2xl border">
                 <InputTypeFieldset
                   label="CPF"
@@ -110,7 +110,7 @@ export const Profile = () => {
                 <GiPadlock className="mr-3 ml-3 text-[20px]" />
               </div>
             </div>
-            <div className="flex w-full gap-3">
+            <div className="flex w-full flex-col gap-3 lg:flex-row">
               <InputTypeFieldset
                 label="Nome Completo*"
                 type="text"
