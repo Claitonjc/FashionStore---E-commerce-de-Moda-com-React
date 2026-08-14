@@ -1,4 +1,4 @@
-# 👗 FashionStore
+<h1 align="center">👗 Fashion Store</h1>
 
 Uma aplicação de e-commerce desenvolvida para simular uma experiência completa de compra online no segmento de moda. O projeto foi construído utilizando React e Tailwind CSS, com foco em componentes reutilizáveis, gerenciamento de estado e uma interface moderna e responsiva.
 
