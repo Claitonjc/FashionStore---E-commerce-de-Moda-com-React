@@ -24,7 +24,7 @@ export const ProductsCart = ({ product }) => {
         alt={product.title}
         className="bg-light m-3 h-27.5 w-30 rounded-lg p-2"
       />
-      <section className="flex w-full flex-col items-start gap-2 sm:flex-row sm:justify-between">
+      <section className="flex w-full flex-col items-start gap-4 sm:flex-row sm:justify-between">
         <div className="flex flex-col items-start gap-2 text-left sm:items-start sm:text-left">
           <h2 className="line-clamp-2 leading-5">{product.title}</h2>
           <div className="flex w-24 justify-between rounded-sm border p-1">

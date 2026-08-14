@@ -23,7 +23,7 @@ export const AddressModal = ({ onClose, onSubmit, handleChange, formData }) => {
           type="button"
           onClick={onClose}
           aria-label="Fechar modal"
-          className="hover:text-alert absolute top-4 right-4 cursor-pointer text-[24px] text-gray-500 transition-colors"
+          className="hover:text-alert absolute top-2 right-4 cursor-pointer text-[24px] text-gray-500 transition-colors"
         >
           <IoMdClose />
         </button>

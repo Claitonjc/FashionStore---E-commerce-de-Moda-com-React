@@ -6,6 +6,9 @@ import { useCheckout } from "../../hooks/useCheckout";
 // Components
 import { InputTypeFieldset } from "../InputTypeFieldset/InputTypeFieldset";
 
+//Utils
+import { maskCpf, maskCard } from "../../utils/masks";
+
 // ==========================================================================
 // CONSTANTS
 // ==========================================================================
@@ -46,9 +49,19 @@ export const AddCard = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
+    let newValue = value;
+
+    if (name === "cpf") {
+      newValue = value.replace(/\D/g, "").slice(0, 11);
+    }
+
+    if (name === "number") {
+      newValue = value.replace(/\D/g, "").slice(0, 16);
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: newValue,
     }));
   };
 
@@ -62,10 +75,9 @@ export const AddCard = () => {
           label="Número do cartão*"
           type="text"
           name="number"
-          value={formData.number}
+          value={maskCard(formData.number)}
           onChange={handleChange}
           required
-          maxLength={16}
         />
         <InputTypeFieldset
           label="Nome impresso no cartão*"
@@ -73,9 +85,10 @@ export const AddCard = () => {
           name="name"
           value={formData.name}
           onChange={handleChange}
+          className="placeholder:text-xl"
           required
         />
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row">
           <InputTypeFieldset
             label="Validade*"
             type="month"
@@ -86,7 +99,7 @@ export const AddCard = () => {
           />
           <InputTypeFieldset
             label="Código de verificação*"
-            type="text"
+            type="password"
             name="code"
             value={formData.code}
             onChange={handleChange}
@@ -100,15 +113,15 @@ export const AddCard = () => {
           value={formData.alias}
           onChange={handleChange}
         />
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row">
           <InputTypeFieldset
-            label="CPF/CNPJ do titular*"
+            label="CPF do titular*"
             type="text"
             name="cpf"
-            value={formData.cpf}
+            value={maskCpf(formData.cpf)}
             onChange={handleChange}
             required
-            maxLength={11}
+            maxLength={14}
           />
           <InputTypeFieldset
             label="Data de nascimento*"

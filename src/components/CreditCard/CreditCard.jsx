@@ -12,6 +12,7 @@ import { InputTypeFieldset } from "../../components/InputTypeFieldset/InputTypeF
 // Utils
 import { formatPrice } from "../../utils/formatPrice";
 import { calcTotalPrice } from "../../utils/calculatePrice";
+import { maskCardNumber } from "../../utils/masks";
 
 export const CreditCard = () => {
   // ==========================================================================
@@ -77,7 +78,7 @@ export const CreditCard = () => {
                   />
                   <div>
                     <span>{card.alias ? card.alias : card.name}</span>
-                    <p>{card.number}</p>
+                    <p>{maskCardNumber(card.number)}</p>
                   </div>
                 </label>
                 <div className="flex items-center gap-3">
