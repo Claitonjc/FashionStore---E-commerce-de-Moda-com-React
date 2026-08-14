@@ -1,42 +1,59 @@
 <h1 align="center">👗 Fashion Store</h1>
 
-Uma aplicação de e-commerce desenvolvida para simular uma experiência completa de compra online no segmento de moda. O projeto foi construído utilizando React e Tailwind CSS, com foco em componentes reutilizáveis, gerenciamento de estado e uma interface moderna e responsiva.
+<p align="center">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" alt="Vite" />
+  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+</p>
 
-## 🚀 Funcionalidades
+<p align="center">
+  Uma aplicação completa de e-commerce desenvolvida para simular uma experiência real de compra online no segmento de moda, com foco absoluto em UI/UX e responsividade.
+</p>
 
-- 🛍️ Listagem de produtos
-- 🔍 Visualização de detalhes dos produtos
-- 🛒 Carrinho de compras
-- ➕ Adicionar e remover produtos do carrinho
-- 🔢 Controle de quantidade dos itens
-- 💳 Resumo do pedido com cálculo automático
-- 👤 Cadastro e autenticação de usuários
-- 📍 Gerenciamento de endereços
-- 📦 Fluxo de checkout
-- 📱 Layout responsivo
+<div align="center">
+  <h3>
+    <a href="https://fashionstoree-commerce.vercel.app/">🚀 Acessar o Projeto Online</a>
+  </h3>
+</div>
+
+<br />
+
+<div align="center">
+  <img src="https://via.placeholder.com/800x400?text=Coloque+um+print+ou+GIF+do+seu+projeto+aqui" alt="Demonstração Fashion Store" width="100%">
+</div>
+
+## 🚀 Funcionalidades e Soluções Técnicas
+
+Além das funções básicas de um e-commerce, este projeto focou em resolver problemas reais de interface:
+
+- **🛍️ Vitrine e Detalhes:** Listagem dinâmica e página de detalhes de produtos.
+- **🛒 Carrinho de Compras Completo:** Adição, remoção e controle de quantidade com cálculo automático de subtotal, frete e descontos em tempo real.
+- **📦 Fluxo de Checkout:** Formulários complexos com validação para gerenciamento de endereços e pagamento.
+- **📱 Responsividade Avançada:** Layout Mobile-First, utilizando CSS Grid e Flexbox para adaptação fluida em qualquer tela (incluindo tratamento de elementos `sticky` e modais animados).
+- **👤 Autenticação Simulada:** Cadastro de usuários e redefinição de senha com transições suaves de estado.
+- **💾 Persistência de Dados:** Uso de Local Storage para manter o estado do carrinho e sessão do usuário.
 
 ## 🛠️ Tecnologias Utilizadas
 
-- React
-- JavaScript (ES6+)
-- React Router DOM
-- Context API
-- Tailwind CSS
-- Vite
-- Local Storage
+- **Core:** React, JavaScript (ES6+)
+- **Roteamento:** React Router DOM
+- **Gerenciamento de Estado:** Context API e Custom Hooks
+- **Estilização:** Tailwind CSS (com arbitrary variants e animações)
+- **Build e Deploy:** Vite, Vercel
 
 ## 📂 Estrutura do Projeto
 
 ```bash
 src/
+├── assets/
 ├── components/
 ├── contexts/
 ├── hooks/
 ├── pages/
 ├── routes/
 ├── services/
-├── utils/
-└── assets/
+└── utils/
 ```
 
 ## ⚙️ Instalação
@@ -44,13 +61,13 @@ src/
 Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/fashionstore.git
+git clone https://github.com/seu-usuario/FashionStore---E-commerce-de-Moda-com-React.git
 ```
 
 Acesse a pasta do projeto:
 
 ```bash
-cd fashionstore
+cd FashionStore---E-commerce-de-Moda-com-React
 ```
 
 Instale as dependências:
@@ -90,10 +107,6 @@ Este projeto foi desenvolvido com o objetivo de praticar e consolidar conhecimen
 - Boas práticas de organização de projetos
 - Responsividade e experiência do usuário
 
-## 🔮 Melhorias Futuras
-
-- Integração com API de CEP
-- Painel administrativo
 
 ## 👨‍💻 Autor
 
