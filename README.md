@@ -1,104 +1,292 @@
-# 👗 FashionStore
+# 🛍️ Fashion Store — E-commerce de Moda com React
 
-Uma aplicação de e-commerce desenvolvida para simular uma experiência completa de compra online no segmento de moda. O projeto foi construído utilizando React e Tailwind CSS, com foco em componentes reutilizáveis, gerenciamento de estado e uma interface moderna e responsiva.
+E-commerce desenvolvido com React, simulando uma loja virtual completa, desde a navegação e filtragem de produtos até o carrinho, cadastro de usuários e fluxo de checkout.
 
-## 🚀 Funcionalidades
+O projeto foi desenvolvido com foco em praticar conceitos fundamentais e avançados de desenvolvimento Front-End utilizando React.
 
-- 🛍️ Listagem de produtos
-- 🔍 Visualização de detalhes dos produtos
-- 🛒 Carrinho de compras
-- ➕ Adicionar e remover produtos do carrinho
-- 🔢 Controle de quantidade dos itens
-- 💳 Resumo do pedido com cálculo automático
-- 👤 Cadastro e autenticação de usuários
-- 📍 Gerenciamento de endereços
-- 📦 Fluxo de checkout
-- 📱 Layout responsivo
+## 🚀 Demonstração
 
-## 🛠️ Tecnologias Utilizadas
+🔗 [Acessar o Fashion Store](https://fashionstoree-commerce.vercel.app/)
 
-- React
-- JavaScript (ES6+)
-- React Router DOM
+🔗 [Repositório no GitHub](https://github.com/Claitonjc/FashionStore---E-commerce-de-Moda-com-React)
+
+---
+
+## 📸 Preview
+
+<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/537ccc89-85e8-4fa0-a513-b9c26ffacb96" />
+
+---
+
+<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/7beec94c-6da0-4f6b-8117-6463b36c01cb" />
+
+---
+
+<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/2aee4da7-f04c-4d10-9567-a6c8f0d46d55" />
+
+---
+
+<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/e062578d-60e9-43d2-a4fa-d44aaa913316" />
+
+---
+
+<img width="1292" height="1032" alt="image" src="https://github.com/user-attachments/assets/9d64ee87-5fa7-48fd-a78c-a114005b549b" />
+
+---
+
+## ✨ Funcionalidades
+
+### 🛒 Produtos
+
+- Listagem de produtos
+- Filtro de produtos por categoria
+- Página de detalhes do produto
+- Integração com API externa
+- Estados de carregamento
+- Tratamento de erros
+
+### 👤 Usuários
+
+- Cadastro de usuário
+- Login
+- Logout
+- Edição dos dados do perfil
+- Exclusão de conta
+- Recuperação de senha simulada
+
+### 🛍️ Carrinho
+
+- Adição de produtos
+- Controle de quantidade
+- Remoção de produtos
+- Cálculo automático do subtotal
+- Carrinho individual por usuário
+- Persistência dos dados utilizando LocalStorage
+
+### 📦 Checkout
+
+- Cadastro e seleção de endereços
+- Consulta de endereço através do CEP
+- Seleção da forma de entrega
+- Cálculo de frete
+- Seleção de forma de pagamento
+- Pagamento via PIX
+- Pagamento via cartão de crédito
+- Seleção de parcelas
+- Validação do CVV
+- Resumo do pedido
+- Geração de número do pedido
+- Tela de confirmação da compra
+
+### 📱 Interface
+
+- Layout responsivo
+- Interface adaptada para dispositivos móveis
+- Componentes reutilizáveis
+- Feedback visual para diferentes estados da aplicação
+
+---
+
+## 🛠️ Tecnologias
+
+- **React**
+- **JavaScript**
+- **Vite**
+- **Tailwind CSS**
+- **React Router DOM**
+- **Context API**
+- **React Icons**
+- **LocalStorage**
+- **Fetch API**
+
+### APIs utilizadas
+
+- [Fake Store API](https://fakestoreapi.com/) — produtos e categorias
+- [ViaCEP](https://viacep.com.br/) — consulta de endereços através do CEP
+
+---
+
+## 🧠 Conceitos praticados
+
+Durante o desenvolvimento do projeto foram aplicados diversos conceitos importantes do ecossistema React:
+
+- Componentização
+- Props
+- State
+- Hooks
+- Custom Hooks
 - Context API
-- Tailwind CSS
-- Vite
-- Local Storage
+- `useState`
+- `useEffect`
+- `useMemo`
+- `useCallback`
+- `useRef`
+- React Router
+- Rotas dinâmicas
+- Navegação programática
+- Renderização condicional
+- Formulários controlados
+- Consumo de APIs REST
+- Tratamento de erros
+- Estados de loading
+- Persistência de dados
+- LocalStorage
+- Memoização
+- Responsividade
+- Organização e separação de responsabilidades
 
-## 📂 Estrutura do Projeto
+---
 
-```bash
+## 📁 Estrutura do projeto
+
+```text
 src/
+├── assets/
 ├── components/
-├── contexts/
+├── context/
+│   ├── addressContext/
+│   ├── cartContext/
+│   ├── checkoutContext/
+│   └── UsersContext/
 ├── hooks/
 ├── pages/
 ├── routes/
-├── services/
-├── utils/
-└── assets/
+├── service/
+└── utils/
 ```
 
-## ⚙️ Instalação
+### Organização
 
-Clone o repositório:
+**`components/`**  
+Componentes reutilizáveis da interface.
+
+**`context/`**  
+Gerenciamento dos estados globais da aplicação através da Context API.
+
+**`hooks/`**  
+Hooks personalizados utilizados para reutilizar lógica da aplicação.
+
+**`pages/`**  
+Páginas principais da aplicação.
+
+**`routes/`**  
+Configuração das rotas utilizando React Router.
+
+**`service/`**  
+Serviços responsáveis pela comunicação com APIs externas.
+
+**`utils/`**  
+Funções auxiliares, como máscaras de entrada, formatação de preços e cálculo do pedido.
+
+---
+
+## 🔄 Fluxo principal da aplicação
+
+```text
+Home
+│
+├── Produtos
+│   └── Detalhes do produto
+│
+└── Carrinho
+    │
+    ├── Endereço
+    │
+    ├── Forma de envio
+    │
+    ├── Forma de pagamento
+    │
+    └── Checkout
+        │
+        └── Compra concluída
+```
+
+---
+
+## 💾 Persistência de dados
+
+O projeto utiliza `localStorage` para manter informações entre sessões do navegador.
+
+São armazenados dados como:
+
+- Usuários
+- Usuário autenticado
+- Carrinhos
+- Endereços
+- Cartões
+- Forma de pagamento
+- Forma de envio
+- Parcelamento
+- Número do pedido
+
+Para facilitar essa persistência, foi desenvolvido um Custom Hook:
+
+```js
+useLocalStorage()
+```
+
+---
+
+## 📱 Responsividade
+
+A interface foi desenvolvida utilizando Tailwind CSS e adaptada para diferentes tamanhos de tela, incluindo dispositivos móveis, tablets e desktops.
+
+---
+
+## ⚠️ Observação
+
+Este projeto foi desenvolvido para fins de estudo e portfólio.
+
+O sistema de autenticação, armazenamento de usuários e fluxo de pagamento são simulados utilizando `localStorage`. Portanto, não se trata de um sistema de e-commerce pronto para produção.
+
+Nenhum pagamento real é realizado.
+
+---
+
+## 💻 Como executar o projeto
+
+### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/fashionstore.git
+git clone https://github.com/Claitonjc/FashionStore---E-commerce-de-Moda-com-React.git
 ```
 
-Acesse a pasta do projeto:
+### 2. Entre na pasta
 
 ```bash
-cd fashionstore
+cd FashionStore---E-commerce-de-Moda-com-React
 ```
 
-Instale as dependências:
+### 3. Instale as dependências
 
 ```bash
 npm install
 ```
 
-Inicie o servidor de desenvolvimento:
+### 4. Execute o projeto
 
 ```bash
 npm run dev
 ```
 
-## 📸 Demonstração
-
-<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/4e641dea-42ef-46b5-abfb-293e51654035" />
-
-<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/1597e3a7-e520-4841-be43-a01315db5caf" />
-
-<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/747de8b2-d009-473b-9a84-1353818a1569" />
-
-<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/51e3c6ce-463c-473f-8da0-36cadfc7c716" />
-
-<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/322a2703-cd4b-46f4-b493-4e5fc78b2cb8" />
-
-
-## 🎯 Objetivos do Projeto
-
-Este projeto foi desenvolvido com o objetivo de praticar e consolidar conhecimentos em:
-
-- Desenvolvimento Front-End com React
-- Componentização
-- Gerenciamento de estado global
-- Manipulação de formulários
-- Consumo de APIs
-- Boas práticas de organização de projetos
-- Responsividade e experiência do usuário
-
-## 🔮 Melhorias Futuras
-
-- Integração com API de CEP
-- Painel administrativo
-
-## 👨‍💻 Autor
-
-Desenvolvido por **Claiton**.
+A aplicação estará disponível no endereço informado pelo Vite no terminal.
 
 ---
 
-⭐ Se este projeto foi útil para você, considere deixar uma estrela no repositório.
+## 🌐 Deploy
+
+O projeto foi publicado utilizando a Vercel.
+
+🔗 [**Acessar aplicação**](https://fashionstoree-commerce.vercel.app/)
+
+---
+
+## 👨‍💻 Desenvolvedor
+
+**Claiton José Clemes**
+
+Front-End Developer em formação, com foco em JavaScript, React e desenvolvimento de interfaces web.
+
+🔗 [GitHub](https://github.com/Claitonjc)
+
+🔗 [LinkedIn](https://www.linkedin.com/in/claiton-jose-clemes/)
