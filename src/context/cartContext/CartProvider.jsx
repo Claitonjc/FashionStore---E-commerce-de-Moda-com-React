@@ -40,7 +40,7 @@ export const CartProvider = ({ children }) => {
             },
           ],
         };
-        setCarts([...carts, firstCartUser]);
+        setCarts((prevCarts) => [...prevCarts, firstCartUser]);
         return;
       }
 
@@ -76,7 +76,7 @@ export const CartProvider = ({ children }) => {
         ),
       );
     },
-    [carts, currentCart, setCarts, userLogged],
+    [currentCart, setCarts, userLogged],
   );
 
   /**
@@ -141,17 +141,18 @@ export const CartProvider = ({ children }) => {
     (id) => {
       if (!currentCart || !userLogged) return;
 
-      const userCart = carts.find((cart) => cart.userId === userLogged.id);
-      const itemsCart = userCart.items.filter((product) => product.id !== id);
+      const itemsCart = currentCart.items.filter(
+        (product) => product.id !== id,
+      );
 
-      const newCart = { ...userCart, items: itemsCart };
+      const newCart = { ...currentCart, items: itemsCart };
       setCarts((prevCarts) =>
         prevCarts.map((cart) =>
           cart.userId === userLogged.id ? newCart : cart,
         ),
       );
     },
-    [carts, setCarts, userLogged, currentCart],
+    [setCarts, userLogged, currentCart],
   );
 
   const clearCart = useCallback(() => {

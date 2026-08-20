@@ -13,7 +13,6 @@ export const CheckoutProvider = ({ children }) => {
   // =================================================================
   const [cvv, setCvv] = useState("");
   const [modalActive, setModalActive] = useState(false);
-  const [stateAuthenticCard, setStateAuthenticCard] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
@@ -104,8 +103,6 @@ export const CheckoutProvider = ({ children }) => {
       modalActive,
       setModalActive,
       authenticCard,
-      stateAuthenticCard,
-      setStateAuthenticCard,
       errorMessage,
       setErrorMessage,
       installments,
@@ -126,8 +123,6 @@ export const CheckoutProvider = ({ children }) => {
       modalActive,
       setModalActive,
       authenticCard,
-      stateAuthenticCard,
-      setStateAuthenticCard,
       errorMessage,
       setErrorMessage,
       installments,

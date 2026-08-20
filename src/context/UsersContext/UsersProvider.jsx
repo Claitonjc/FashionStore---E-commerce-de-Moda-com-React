@@ -36,7 +36,7 @@ export const UsersProvider = ({ children }) => {
   // ===================================================================
   const register = useCallback(
     (name, email, cpf, date, phone, password) => {
-      const emailExist = users?.some((user) => user.email === email);
+      const emailExist = users.some((user) => user.email === email);
 
       if (emailExist) {
         showTemporaryMessage("Este E-mail já está cadastrado", 3000);
@@ -112,10 +112,11 @@ export const UsersProvider = ({ children }) => {
 
   const deleteAccount = useCallback(
     (account) => {
-      const listUsers = users.filter((user) => user.id !== account.id);
-      setUsers(listUsers);
+      setUsers((prevUsers) =>
+        prevUsers.filter((user) => user.id !== account.id),
+      );
     },
-    [setUsers, users],
+    [setUsers],
   );
 
   // =================================================================

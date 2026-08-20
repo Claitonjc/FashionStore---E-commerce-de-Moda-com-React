@@ -59,7 +59,7 @@ export const AddressProvider = ({ children }) => {
       if (editingId) {
         setAddresses((prev) =>
           prev.map((address) =>
-            address.id === formData.id ? formData : address,
+            address.id === editingId ? formData : address,
           ),
         );
         setEditingId(null);
@@ -90,7 +90,7 @@ export const AddressProvider = ({ children }) => {
   const removeAddress = useCallback(
     (id) => {
       setAddresses((prev) => prev.filter((item) => item.id !== id));
-      setSelectedAddressId(null);
+      setSelectedAddressId("");
     },
     [setAddresses, setSelectedAddressId],
   );

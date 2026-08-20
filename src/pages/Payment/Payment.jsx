@@ -1,8 +1,8 @@
 import { FaPix } from "react-icons/fa6";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaCreditCard } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
-import { useNavigate, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 // Hooks
 import { useUsers } from "../../hooks/useUsers";
@@ -23,7 +23,6 @@ export const Payment = () => {
   // 1. STATES & HOOKS
   // ==========================================================================
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
 
   const { userLogged } = useUsers();
   const { currentCart, isCartEmpty } = useCart();
@@ -33,8 +32,6 @@ export const Payment = () => {
     modalActive,
     setModalActive,
     authenticCard,
-    stateAuthenticCard,
-    setStateAuthenticCard,
     paymentMethod,
     setPaymentMethod,
   } = useCheckout();
@@ -58,16 +55,6 @@ export const Payment = () => {
   const finalDiscount = isExpress ? totalDiscountFreight : totalWithDiscount;
   const finalInstallments = isExpress ? installmentsWithFreight : installments;
   const finalFreight = isExpress ? freight : "Grátis";
-
-  // =========================================================================
-  // 3. EFFECTS
-  // =========================================================================
-  useEffect(() => {
-    if (stateAuthenticCard) {
-      navigate("/checkout");
-      setStateAuthenticCard(false);
-    }
-  }, [stateAuthenticCard, navigate, setStateAuthenticCard]);
 
   // =========================================================================
   // 4. GUARDS & REDIRECTS
