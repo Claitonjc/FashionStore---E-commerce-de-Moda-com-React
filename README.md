@@ -14,23 +14,25 @@ O projeto foi desenvolvido com foco em praticar conceitos fundamentais e avança
 
 ## 📸 Preview
 
-<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/537ccc89-85e8-4fa0-a513-b9c26ffacb96" />
+### 🏠 Home
 
----
+![Fashion Store - Home](./src/assets/screenshots/home.png)
 
-<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/7beec94c-6da0-4f6b-8117-6463b36c01cb" />
+### 🛍️ Detalhes do produto
 
----
+![Fashion Store - Produto](./src/assets/screenshots/product-details.png)
 
-<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/2aee4da7-f04c-4d10-9567-a6c8f0d46d55" />
+### 🛒 Carrinho
 
----
+![Fashion Store - Carrinho](./src/assets/screenshots/cart.png)
 
-<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/e062578d-60e9-43d2-a4fa-d44aaa913316" />
+### 💳 Checkout
 
----
+![Fashion Store - Checkout](./src/assets/screenshots/checkout.png)
 
-<img width="1292" height="1032" alt="image" src="https://github.com/user-attachments/assets/9d64ee87-5fa7-48fd-a78c-a114005b549b" />
+### 📱 Responsividade
+
+![Fashion Store - Mobile](./src/assets/screenshots/mobile.png)
 
 ---
 
